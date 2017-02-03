@@ -38,7 +38,6 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main(Model model) {
-
 		return "main";
 	}
 
