@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter @Getter
 public class CreditCard {
     @Id
-    @Column(name="ID")
+    @Column(name="CREDIT_CARD_ID")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long creditId;
     @Column(name="number")

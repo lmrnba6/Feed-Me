@@ -19,7 +19,7 @@ import lombok.Setter;
 @Table(name="MEAL_RATING")
 public class MealRating {
     @Id
-    @Column(name="ID")
+    @Column(name="MEAL_RATING_ID")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long mealRatingId;
     @OneToOne

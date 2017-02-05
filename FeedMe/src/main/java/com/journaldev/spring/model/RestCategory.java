@@ -16,7 +16,7 @@ import lombok.Setter;
 @Table(name = "REST_CATEGORY")
 public class RestCategory {
 	@Id
-	@Column(name = "ID")
+	@Column(name = "REST_CATEGORY_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long restCategoryId;
 	@Column(name = "NAME")

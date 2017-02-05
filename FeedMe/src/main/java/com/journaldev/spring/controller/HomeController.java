@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +38,7 @@ public class HomeController {
 	private ShoppingCartService cartService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String main(Model model) {
+	public String main(Model model, HttpServletRequest request) {
 		
 		return "main";
 	}
@@ -73,21 +74,20 @@ public class HomeController {
 			user = userService.getByName(userName);
 			model.addAttribute("user", user);
 			if (cart != null) {
-				Set<Meal> userMeals = cart.getMeals();
+				Set<Meal> mealsNoSigninCart = cart.getMeals();
+				Set<Meal> userMeals = cartService.getByUser(user).getMeals();
 				cart = cartService.getByUser(user);
-				if (cart != null) {
-					for (Meal m : userMeals) {
-						cart.getMeals().add(m);
+				for (Meal m : mealsNoSigninCart) {
+					userMeals.add(m);
 					}
-				} else {
-					cart.setUser(user);
-				}
-
-			} else {
+				cart.setMeals(userMeals);
+				cartService.update(cart);
+				
+			}else{
 				cart = cartService.getByUser(user);
-
 			}
-			model.addAttribute("cart", cart);
+			System.out.println(cart.getMeals().size());
+			if(cart!=null) model.addAttribute("cart", cart);
 			return "redirect:/";
 		}
 
@@ -95,7 +95,7 @@ public class HomeController {
 
 	@RequestMapping(value = "/registered", method = RequestMethod.POST)
 	public String registred(@RequestParam("userName") String userName, @RequestParam("password") String password,
-			@RequestParam("email") String email,
+			@RequestParam("email") String email,@RequestParam("lastName") String lastName,@RequestParam("firstName") String firstName,
 			@RequestParam("password2") String password2, Model model)
 			throws NoSuchAlgorithmException, NoSuchProviderException {
 
@@ -130,6 +130,8 @@ public class HomeController {
 			password = SecurePassword.getSecurePassword(password);
 			user.setUserPassword(password);
 			user.setEmail(email);
+			user.setLastName(lastName);
+			user.setFirstName(firstName);
 			user.setEntryDate(new Date(new java.util.Date().getTime()));
 			userService.add(user);
 			ShoppingCart cart = new ShoppingCart();
@@ -141,6 +143,10 @@ public class HomeController {
 			return "login";
 		} else {
 			model.addAttribute("message", message);
+			model.addAttribute("firstName", firstName);
+			model.addAttribute("lastName", lastName);
+			model.addAttribute("userName", userName);
+			model.addAttribute("email", email);
 			return "register";
 		}
 

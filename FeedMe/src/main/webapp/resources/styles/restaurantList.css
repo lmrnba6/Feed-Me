@@ -1,11 +1,17 @@
 
-body{margin-top:20px;
+body{margin-top:50px;
     background:#eee;
 }
+
+.snippets{
+	margin-top: 20px;
+}
+
 /* E-commerce */
 .product-box {
   padding: 0;
   border: 1px solid #e7eaec;
+  
 }
 .product-box:hover,
 .product-box.active {

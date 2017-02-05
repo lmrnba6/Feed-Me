@@ -5,6 +5,7 @@ import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -21,11 +22,10 @@ import lombok.Setter;
 @Table(name = "MENU")
 public class Menu {
 	@Id
-	@Column(name = "ID")
+	@Column(name = "MENU_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long menuId;
-	@OneToMany
-	@JoinColumn(name = "MEALS")
+	@OneToMany(fetch = FetchType.EAGER)
 	private Set<Meal> meal = new HashSet<Meal>();
 	@OneToOne
 	@JoinColumn(name = "RESTAURANT_ID")

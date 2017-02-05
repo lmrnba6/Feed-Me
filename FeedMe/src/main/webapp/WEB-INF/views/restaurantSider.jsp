@@ -14,19 +14,22 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/styles/sider.css" />
+	href="<%=request.getContextPath()%>/resources/styles/account.css" />
+<script
+	src="<%=request.getContextPath()%>/resources/scripts/restaurant.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
-	<div class="col-md-3" id="side">
-                <p class="lead">${restaurant.name}</p>
-                <div class="list-group">
-                    <a href="#" id="menu" class="list-group-item active">Menu</a>
-                    <a href="#" id="rating"  class="list-group-item">Reviews</a>
-                    
-                </div>
-            </div>
+	<div class="col-md-3 sider">
+
+		<div class="list-group">
+			<a href="#" class="list-group-item active">Home</a> <a href="#"
+				id="menu" class="list-group-item ">Menu</a> <a href="#" id="rating"
+				class="list-group-item">Reviews</a>
+
+		</div>
+	</div>
 	</div>
 </body>
 </html>

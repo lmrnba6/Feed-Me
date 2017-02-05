@@ -15,11 +15,11 @@
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="<c:url value='/'/>"><img
-					src="http://icons.iconarchive.com/icons/graphicloads/food-drink/32/icecream-icon.png">
+					src="<%=request.getContextPath()%>/resources/images/Logo.png" height="70" width="150" >
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
-					<li><a href="test">Feed-Me</a></li>
+					<!-- <li><a href="test">Feed-Me</a></li> -->
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
 					<c:choose>

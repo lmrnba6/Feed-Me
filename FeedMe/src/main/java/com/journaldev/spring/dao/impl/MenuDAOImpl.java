@@ -13,6 +13,7 @@ import org.springframework.stereotype.Repository;
 
 import com.journaldev.spring.dao.MenuDAO;
 import com.journaldev.spring.model.Menu;
+import com.journaldev.spring.model.ShoppingCart;
 
 @Repository
 public class MenuDAOImpl implements MenuDAO {
@@ -66,16 +67,14 @@ public class MenuDAOImpl implements MenuDAO {
 	}
 
 	@SuppressWarnings("unchecked")
-	public Menu getByName(String MenuName) {
-		Session session = this.sessionFactory.getCurrentSession();
-		List<Menu> MenuList = new ArrayList<Menu>();
-		String SQL_QUERY = "from Menu u where u.restaurant = '" + MenuName + "'";
-		Query<Menu> query = session.createQuery(SQL_QUERY);
-		MenuList = query.getResultList();
-		if (MenuList.size() > 0)
-			return MenuList.get(0);
-		else
-			return null;
+	public Menu getByName(String rest) {
+
+		for (Menu menu : list()) {
+			
+			if(String.valueOf(menu.getRestaurant().getRestId()).equals(rest))
+				return menu;
+		}
+		return null;
 	}
 
 }

@@ -36,7 +36,7 @@
 
 						<h1 class="well">Payment</h1>
 
-						<div class="col-lg-12 well">
+						<div class="col-lg-12">
 							<div class="row">
 								<c:if test="${!empty message}">
 									<div class="alert alert-success">
@@ -91,12 +91,12 @@
 										</div>
 										
 										<p></p>
-										<button type="submit" class="btn btn-lg btn-info">Save</button>
+										<button type="submit" id="btnEditCard"  class="btn btn-lg btn-success btn-block custom " disabled="disabled">Save</button>
 									</div>
 								</form>
 							</div>
 							<p></p>
-							<button type="button" id="editCard" class="btn btn-warning">Edit</button>
+							<button type="button" id="editCard" class="btn  btn-lg  btn-warning btn-block custom ">Edit</button>
 						</div>
 					</div>
 				</div>
@@ -104,7 +104,5 @@
 		</div>
 	</div>
 	</div>
-		<jsp:include page="footer.jsp" />
-
 </body>
 </html>

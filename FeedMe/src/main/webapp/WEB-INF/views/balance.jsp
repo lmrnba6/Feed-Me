@@ -37,7 +37,7 @@
 
 						<h1 class="well">Balance</h1>
 
-						<div class="col-lg-12 well">
+						<div class="col-lg-12">
 							<div class="row">
 								<c:if test="${!empty messageFailed}">
 									<div class="alert alert-danger">
@@ -65,12 +65,12 @@
 										</div>
 								
 										<p></p>
-										<button type="submit" class="btn btn-lg btn-info">Redeem</button>
+										<button type="submit" class="btn btn-lg btn-info btn-block custom">Redeem</button>
 									</div>
 								</form>
 							</div>
 							<p></p>
-							<button type="button" id="editCard" class="btn btn-warning">Edit</button>
+							<button type="button" id="editCard" class="btn btn-lg btn-warning btn-block custom ">Edit</button>
 						</div>
 					</div>
 				</div>
@@ -81,7 +81,7 @@
 			</div>
 </div>
 </div>
-		<jsp:include page="footer.jsp" />
+	
 
 </body>
 </html>

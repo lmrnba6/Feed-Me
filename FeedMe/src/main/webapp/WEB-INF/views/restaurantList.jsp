@@ -70,7 +70,7 @@
 								</div>
 							</div>
 						</div>
-						<p></p>
+						<hr>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>

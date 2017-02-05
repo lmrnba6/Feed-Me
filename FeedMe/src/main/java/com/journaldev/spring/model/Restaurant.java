@@ -18,7 +18,7 @@ import lombok.Setter;
 @Table(name = "RESTAURANT")
 public class Restaurant {
 	@Id
-	@Column(name = "ID")
+	@Column(name = "RESTAURANT_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long restId;
 	@Column(name = "NAME")

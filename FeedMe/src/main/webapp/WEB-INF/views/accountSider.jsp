@@ -17,16 +17,15 @@
 	href="<%=request.getContextPath()%>/resources/styles/account.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/styles/header.css" />
-<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/styles/footer.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
 
 	<div class="col-md-3">
-                <p class="lead">Shop Name</p>
+                <br>
                 <div class="list-group">
-                    <a href="<c:url value='/account/info'/>" class="list-group-item active">Account Settings</a>
+              		 <a href="<c:url value='/account/info'/>" class="list-group-item active ">Home</a>
+                    <a href="<c:url value='/account/info'/>" class="list-group-item  ">Account Settings</a>
                     <a href="<c:url value='/account/method'/>" class="list-group-item">payment method</a>
                     <a href="<c:url value='/account/cart'/>" class="list-group-item">Shopping cart</a>
                     <a href="<c:url value='/account/balance'/>" class="list-group-item">Balance</a>

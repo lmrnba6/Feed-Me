@@ -20,7 +20,7 @@ import lombok.Setter;
 @Table(name = "REST_RATING")
 public class RestRating {
 	@Id
-	@Column(name = "ID")
+	@Column(name = "REST_RATING_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long restRatingId;
 	@Column(name = "RATING_VALUE")

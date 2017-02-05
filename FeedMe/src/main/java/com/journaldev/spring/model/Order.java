@@ -21,7 +21,7 @@ import lombok.Setter;
 @Table(name="ORDERS")
 public class Order {
     @Id
-    @Column(name="ID")
+    @Column(name="ORDER_ID")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long orderId;
     @OneToOne
