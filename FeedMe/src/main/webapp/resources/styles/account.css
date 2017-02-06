@@ -41,17 +41,17 @@ body {
 	padding-top: 20px;
 }
 
-.sider {
+/* .sider {
 	margin-left: -250px;
 	left: 250px;
 	width: 500px;
 	background: #fff;
-	position: fixed;
+	position: relative;
 	height: 100%;
 	overflow-y: auto;
 	z-index: 1000;
 	transition: all 0.4s ease 0s;
-}
+} */
 
 .col-sm-1 {
 	margin-top: 25px;

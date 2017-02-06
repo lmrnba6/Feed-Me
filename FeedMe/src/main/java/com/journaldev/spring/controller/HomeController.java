@@ -39,24 +39,24 @@ public class HomeController {
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main(Model model, HttpServletRequest request) {
-		
+
 		return "main";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
-		
+
 		return "login";
 	}
 
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String homeCart(Model model, HttpServletRequest request) {
 		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
-		if (cart == null){
-			cart = new ShoppingCart(); 
-			
+		if (cart == null) {
+			cart = new ShoppingCart();
+
 		}
-		model.addAttribute("cart",cart);
+		model.addAttribute("cart", cart);
 		return "shoppingCart";
 	}
 
@@ -66,28 +66,20 @@ public class HomeController {
 			Model model, RedirectAttributes att, HttpServletRequest request) {
 
 		boolean check = this.userService.checkLogin(userName, password);
-		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
+
 		User user = null;
 		if (!check) {
 			return "redirect:/denied";
 		} else {
 			user = userService.getByName(userName);
 			model.addAttribute("user", user);
-			if (cart != null) {
-				Set<Meal> mealsNoSigninCart = cart.getMeals();
-				Set<Meal> userMeals = cartService.getByUser(user).getMeals();
-				cart = cartService.getByUser(user);
-				for (Meal m : mealsNoSigninCart) {
-					userMeals.add(m);
-					}
-				cart.setMeals(userMeals);
-				cartService.update(cart);
-				
-			}else{
-				cart = cartService.getByUser(user);
+			ShoppingCart cart = new ShoppingCart();
+			if (att.getFlashAttributes() != null) {
+
+				return "restaurant";
 			}
-			System.out.println(cart.getMeals().size());
-			if(cart!=null) model.addAttribute("cart", cart);
+			model.addAttribute("cart", cart);
+
 			return "redirect:/";
 		}
 
@@ -95,8 +87,8 @@ public class HomeController {
 
 	@RequestMapping(value = "/registered", method = RequestMethod.POST)
 	public String registred(@RequestParam("userName") String userName, @RequestParam("password") String password,
-			@RequestParam("email") String email,@RequestParam("lastName") String lastName,@RequestParam("firstName") String firstName,
-			@RequestParam("password2") String password2, Model model)
+			@RequestParam("email") String email, @RequestParam("lastName") String lastName,
+			@RequestParam("firstName") String firstName, @RequestParam("password2") String password2, Model model)
 			throws NoSuchAlgorithmException, NoSuchProviderException {
 
 		boolean check = true;

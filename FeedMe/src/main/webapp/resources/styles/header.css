@@ -9,6 +9,11 @@
 	font-weight: bold;
 }
 
+.nav {
+  background-color: black;
+}
+
+
 .navbar #mynavbar ul li a{
 	color: #fff;
 }

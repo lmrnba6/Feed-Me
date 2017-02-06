@@ -65,7 +65,7 @@
 							<div class="row">
 								<div class="col-md-12">
 									
-									fghfghfg <span class="pull-right"><div class="text-right">
+									${m.meal_id} <span class="pull-right"><div class="text-right">
 							<a href="<c:url value='/restaurant/addCart/${m.meal_id}'/>" class="btn btn-success">Add to cart</a>
 						</div></span>
 									<p>fhgfhfgh</p>

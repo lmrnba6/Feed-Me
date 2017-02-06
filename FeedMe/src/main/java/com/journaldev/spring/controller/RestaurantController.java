@@ -48,7 +48,6 @@ public class RestaurantController {
 	@Autowired
 	private MenuService menuService;
 
-
 	@RequestMapping(value = "/restaurant/list", method = RequestMethod.GET)
 	public String restaurantInfo(Model model) {
 
@@ -65,37 +64,32 @@ public class RestaurantController {
 		model.addAttribute("rating", rating);
 		model.addAttribute("ratingSize", rating.size());
 		model.addAttribute("starsOn", stars);
-		Menu menu =menuService.getByName(String.valueOf(restaurant.getRestId()));
-		//Meal m = new Meal();
-		//m.setMenu(menu);
-		//mealService.add(m);
-		//menu.getMeal().add(m);
-		//menuService.update(menu);
+		Menu menu = menuService.getByName(String.valueOf(restaurant.getRestId()));
+		// Meal m = new Meal();
+		// m.setMenu(menu);
+		// mealService.add(m);
+		// menu.getMeal().add(m);
+		// menuService.update(menu);
 		model.addAttribute("menu", menu.getMeal());
 		return "restaurant";
 	}
 
 	@RequestMapping(value = "/restaurant/addCart/{id}", method = RequestMethod.GET)
-	public String restaurantAdd(@PathVariable("id") Long id, Model model, HttpServletRequest request, RedirectAttributes attribute) {
+	public String restaurantAdd(@PathVariable("id") Long id, Model model, HttpServletRequest request,
+			RedirectAttributes attribute) {
 
 		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
-		User user = (User)  request.getSession().getAttribute("user");
-		
-		if(cart==null)
-			cart= new ShoppingCart();
-		
+		User user = (User) request.getSession().getAttribute("user");
 		Meal m = mealService.getById(id);
 
-		if (user!=null) {
+		if (cart == null)
+			cart = new ShoppingCart();
 			cart.getMeals().add(m);
-			cartService.update(cart);
-			model.addAttribute("cart", cart);
-		} else {
-			cart.getMeals().add(m);
-			model.addAttribute("cart", cart);
-			return "restaurant";
+		model.addAttribute("cart", cart);
+		if (user == null) {
+			attribute.addFlashAttribute("login", "message");
+			return "redirect:/login";
 		}
-
 		return "restaurant";
 	}
 
