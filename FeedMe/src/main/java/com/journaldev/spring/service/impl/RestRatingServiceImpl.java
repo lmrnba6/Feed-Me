@@ -50,9 +50,15 @@ public class RestRatingServiceImpl implements RestRatingService {
 	}
 
 	@Override
-	public List<RestRating> listRestRatingsByRest(Long id) {
+	public List<RestRating> listRestRatingsByRestWithComment(Long id) {
 
-		return this.RestRatingDAO.listRestRatingsByRest(id);
+		return this.RestRatingDAO.listRestRatingsByRestWithComment(id);
+	}
+	
+	@Override
+	public List<RestRating> listRestRatingsByRestWithRating(Long id) {
+
+		return this.RestRatingDAO.listRestRatingsByRestWithRating(id);
 	}
 
 }

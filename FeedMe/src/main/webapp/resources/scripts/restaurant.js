@@ -6,7 +6,7 @@ $("#rating").click(function(){
 	 $("#menuDiv").hide();
 	 $('html, body').animate({
 	        scrollTop: $("#ratingDiv").offset().top
-	    }, 2000);
+	    }, 500);
 });
 
 $("#menu").click(function(){
@@ -14,7 +14,9 @@ $("#menu").click(function(){
     $("#menuDiv").show();
     $('html, body').animate({
         scrollTop: $("#menuDiv").offset().top
-    }, 2000);
+    }, 500);
 });
+
+
 
 });

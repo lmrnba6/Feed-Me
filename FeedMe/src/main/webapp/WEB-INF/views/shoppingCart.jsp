@@ -29,17 +29,19 @@
 	<c:if test="${!empty user}">
 		<jsp:include page="accountSider.jsp" />
 	</c:if>
+	<c:if test="${empty user}">
+		<jsp:include page="accountSiderUserOff.jsp" />
+	</c:if>
 	<center>
 	<div class="col-sm-9">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
 <div class="container">
-<%-- <%
-ShoppingCart cart =(ShoppingCart) request.getSession().getAttribute("cart");
-Set<Meal> list = cart.getMeals();
-%> --%>
-<c:choose>
-	<c:when test="${cart.size!=0}">
 
+<c:choose>
+	<c:when test="${(cart.size==0) or (cart.size==null)}">
+		<h3>0 element in your cart</h3>
+	</c:when>
+	<c:otherwise>
 	<table id="cart" class="table table-hover table-condensed">
     				<thead>
 						<tr>
@@ -86,9 +88,6 @@ Set<Meal> list = cart.getMeals();
 						</tr>
 					</tfoot>
 				</table>
-				</c:when>
-<c:otherwise>
-<h3>0 element in your cart</h3>
 </c:otherwise>
 	</c:choose>	
 </div>

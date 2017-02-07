@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -22,11 +24,18 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.journaldev.spring.model.Meal;
+import com.journaldev.spring.model.Restaurant;
 import com.journaldev.spring.model.ShoppingCart;
 import com.journaldev.spring.model.User;
+import com.journaldev.spring.service.MealRatingService;
+import com.journaldev.spring.service.MealService;
+import com.journaldev.spring.service.MenuService;
+import com.journaldev.spring.service.RestRatingService;
+import com.journaldev.spring.service.RestaurantService;
 import com.journaldev.spring.service.ShoppingCartService;
 import com.journaldev.spring.service.UserService;
 import com.journaldev.spring.util.SecurePassword;
+import com.journaldev.spring.util.Utils;
 
 @Controller
 @SessionAttributes({ "user", "cart" })
@@ -36,6 +45,17 @@ public class HomeController {
 	private UserService userService;
 	@Autowired
 	private ShoppingCartService cartService;
+	@Autowired
+	private RestaurantService restaurantService;
+	@Autowired
+	private RestRatingService restRatingService;
+	@Autowired
+	private MealService mealService;
+	@Autowired
+	private MenuService menuService;
+	@Autowired
+	private MealRatingService mealRatingService;
+
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main(Model model, HttpServletRequest request) {
@@ -43,9 +63,9 @@ public class HomeController {
 		return "main";
 	}
 
-	@RequestMapping(value = "/login", method = RequestMethod.GET)
-	public String login(Model model) {
-
+	@RequestMapping(value = {"/login","/restaurant/main/login","restaurant/login","account/login"}, method = RequestMethod.GET)
+	public String login(Model model,RedirectAttributes att) {
+		
 		return "login";
 	}
 
@@ -63,10 +83,10 @@ public class HomeController {
 	@SuppressWarnings("null")
 	@RequestMapping(value = "/logged", method = RequestMethod.POST)
 	public String loginUser(@RequestParam("userName") String userName, @RequestParam("password") String password,
-			Model model, RedirectAttributes att, HttpServletRequest request) {
+			Model model, HttpServletRequest request) {
 
 		boolean check = this.userService.checkLogin(userName, password);
-
+		
 		User user = null;
 		if (!check) {
 			return "redirect:/denied";
@@ -74,16 +94,31 @@ public class HomeController {
 			user = userService.getByName(userName);
 			model.addAttribute("user", user);
 			ShoppingCart cart = new ShoppingCart();
-			if (att.getFlashAttributes() != null) {
-
-				return "restaurant";
-			}
+			cart.setSize(0);
 			model.addAttribute("cart", cart);
-
 			return "redirect:/";
 		}
 
 	}
+	
+	@SuppressWarnings("null")
+	@RequestMapping(value = "/loggedMenu/{id}", method = RequestMethod.POST)
+	public String loginUserMenu(@PathVariable("id") Long id, @RequestParam("userName") String userName, @RequestParam("password") String password,
+			Model model, HttpServletRequest reques, RedirectAttributes attribute) {
+		
+		boolean check = this.userService.checkLogin(userName, password);
+		User user = null;
+		if (!check) {
+			return "redirect:/denied";
+		} else {
+			user = userService.getByName(userName);
+			model.addAttribute("user", user);
+			Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,attribute);
+			return "restaurant";
+		}
+
+	}
+
 
 	@RequestMapping(value = "/registered", method = RequestMethod.POST)
 	public String registred(@RequestParam("userName") String userName, @RequestParam("password") String password,
@@ -144,7 +179,7 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value = "/logout", method = RequestMethod.GET)
+	@RequestMapping(value ={"/logout","/account/logout","/restaurant/addCart/logout"}, method = RequestMethod.GET)
 	public String logout(Model model, HttpSession session, SessionStatus status) {
 		status.setComplete();
 		session.removeAttribute("user");
@@ -153,7 +188,7 @@ public class HomeController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = "/register", method = RequestMethod.GET)
+	@RequestMapping(value = {"/register","/restaurant/main/register","restaurant/register"}, method = RequestMethod.GET)
 	public String register(Model model) {
 		model.addAttribute("message", "");
 		return "register";

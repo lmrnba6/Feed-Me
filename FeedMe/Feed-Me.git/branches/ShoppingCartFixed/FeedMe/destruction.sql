@@ -1,0 +1,37 @@
+
+DROP TABLE restaurant CASCADE;
+
+DROP TABLE restRating CASCADE;
+
+DROP TABLE users CASCADE;
+
+DROP TABLE mealRating CASCADE;
+
+DROP TABLE feedBack CASCADE;
+DROP TABLE meal CASCADE;
+DROP TABLE menu CASCADE;
+DROP TABLE orders CASCADE;
+DROP TABLE restCategory CASCADE;
+DROP TABLE shoppingCart CASCADE;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

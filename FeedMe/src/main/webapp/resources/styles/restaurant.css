@@ -22,15 +22,68 @@ body {
     
 }
 
+#hearts { color: #ee8b2d;}
+#hearts-existing { color: #ee8b2d;}
+
+.row .addmeal {
+    color: #fff;
+    background-color: #fa0029;
+    border-color: #fa0029;
+}
+
+.row .addmeal:hover {
+    color: #fff;
+    background-color: #fc4029;
+    border-color: #fc4029;
+}
+
+ratingDiv .btn {
+    color: #fff;
+    background-color: #f8bd00;
+    border-color: #f8bd00;
+}
+
+#ratingDiv .btn:hover {
+    color: #fff;
+    background-color: #f9cd00;
+    border-color: #f9cd00;
+}
+
+.glyphicon-star {
+	color: #f8bd00;
+}
+.glyphicon-star-empty{
+	color: gray;
+}
+
+.glyphicon-star, .glyphicon-star-empty{
+	size: 50px;
+}
+
+/* .row .thumbs{
+	color:#fff;
+	background-color: #352700;
+	border-color: #33527c;
+} */
+
 .thumbnail {
     padding: 0;
 }
 
+h4 a{
+	color:black;
+	font-size: 50px;
+	font-family: fantasy;
+}
 
+p{
+	font-style: oblique;
+	font-size:105x; 
+}
 
 .thumbnail .caption-full {
     padding: 9px;
-    color: #333;
+    color: black;
 }
 
 .widget-products li>a:after {

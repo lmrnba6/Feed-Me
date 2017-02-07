@@ -34,9 +34,13 @@
 
 
 	<div class="wrapper">
-
-
+		
+		<c:if test="${!empty ok}">
+		<c:url var="login" value="/loggedMenu/${restaurant.restId }"></c:url>
+		</c:if>
+		<c:if test="${empty ok}">
 		<c:url var="login" value="/logged"></c:url>
+		</c:if>
 		<form class="form-signin" action="${login}" method="Post">
 			<c:if test="${!empty message}">
 				<div class="alert alert-success">

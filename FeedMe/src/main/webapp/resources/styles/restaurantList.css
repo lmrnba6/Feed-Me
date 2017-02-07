@@ -1,6 +1,7 @@
 
 body{margin-top:50px;
-    background:#eee;
+    background-color:#FF4500;
+    
 }
 
 .snippets{
@@ -12,6 +13,10 @@ body{margin-top:50px;
   padding: 0;
   border: 1px solid #e7eaec;
   
+}
+
+.product-desc h3{
+	font-family: cursive;
 }
 .product-box:hover,
 .product-box.active {
@@ -70,14 +75,16 @@ table.shoping-cart-table tr td:last-child {
 .product-name {
   font-size: 16px;
   font-weight: 600;
-  color: #676a6c;
+  color: black;
   display: block;
   margin: 2px 0 5px 0;
 }
+
 .product-name:hover,
 .product-name:focus {
-  color: #1ab394;
+  color: #fa0029;
 }
+
 .product-price {
   font-size: 14px;
   font-weight: 600;

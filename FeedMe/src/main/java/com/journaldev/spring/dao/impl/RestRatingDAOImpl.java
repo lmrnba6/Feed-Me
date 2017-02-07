@@ -79,10 +79,21 @@ public class RestRatingDAOImpl implements RestRatingDAO {
 	}
 
 	@Override
-	public List<RestRating> listRestRatingsByRest(Long id) {
+	public List<RestRating> listRestRatingsByRestWithComment(Long id) {
 		List<RestRating> ratings = new ArrayList<RestRating>();
 
-		for (RestRating restRating : ratings) {
+		for (RestRating restRating : list()) {
+			if (restRating.getRestaurant().getRestId() == id && restRating.getReview()!=null)
+				ratings.add(restRating);
+		}
+		return ratings;
+	}
+	
+	@Override
+	public List<RestRating> listRestRatingsByRestWithRating(Long id) {
+		List<RestRating> ratings = new ArrayList<RestRating>();
+
+		for (RestRating restRating : list()) {
 			if (restRating.getRestaurant().getRestId() == id)
 				ratings.add(restRating);
 		}

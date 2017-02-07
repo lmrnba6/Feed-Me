@@ -24,7 +24,7 @@
 	<div class="col-md-3">
                 <br>
                 <div class="list-group">
-              		 <a href="<c:url value='/account/info'/>" class="list-group-item active ">Home</a>
+              		 <a href="<c:url value='/'/>" class="list-group-item active ">Home</a>
                     <a href="<c:url value='/account/info'/>" class="list-group-item  ">Account Settings</a>
                     <a href="<c:url value='/account/method'/>" class="list-group-item">payment method</a>
                     <a href="<c:url value='/account/cart'/>" class="list-group-item">Shopping cart</a>

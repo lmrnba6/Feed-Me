@@ -1,8 +1,7 @@
 @import "bourbon";
 
 html, body {
-	background-image:
-		url("http://www.chewoutloud.com/wp-content/uploads/2013/01/homestyle-chicken-chow-mein-3.jpg");
+	background-image: url(../images/main6.jpg);
 	-webkit-background-size: 100% auto;
 	-moz-background-size: 100% auto;
 	-ms-background-size: 100% auto;
@@ -11,8 +10,6 @@ html, body {
 	padding-top: 20px;
 	padding-bottom: 20px;
 }
-
-
 
 .btn {
 	background-color: #F63440;
@@ -29,10 +26,9 @@ html, body {
 	margin: 0 auto;
 	background-color: #fff;
 	border: 1px solid rgba(0, 0, 0, 0.1);
-	
 }
 
-.form-signin input{
+.form-signin input {
 	color: black;
 }
 
@@ -59,7 +55,8 @@ html, body {
 button:focus {
 	background-color: white;
 }
-button:hover{
+
+button:hover {
 	background-color: black;
 }
 

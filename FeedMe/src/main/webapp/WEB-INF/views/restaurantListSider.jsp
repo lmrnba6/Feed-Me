@@ -18,7 +18,7 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/styles/header.css" />
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/styles/footer.css" />
+	href="<%=request.getContextPath()%>/resources/styles/footer .css" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
 <body>
@@ -26,12 +26,16 @@
 	<div class="col-md-3" id="side">
                 <br>
                 <div class="list-group">
-               		 <a href="#" class="list-group-item active">Home</a>
-                    <a href="#" class="list-group-item">Category 1</a>
-                    <a href="#" class="list-group-item">Category 2</a>
-                    <a href="#" class="list-group-item">Category 3</a>
+               		 <a href="<c:url value='/'/>" class="list-group-item active">Home</a>
+               		 <c:if test="${empty user}">
+                    	<a href="<c:url value='/login'/>" class="list-group-item">Login</a>
+               		 </c:if>
+               		 <c:if test="${!empty user}">
+                    	<a href="<c:url value='/logout'/>" class="list-group-item">Logout</a>
+               		 </c:if>
+                    <a href="#" class="list-group-item">Help</a>
                 </div>
             </div>
-	</div>
+	
 </body>
 </html>

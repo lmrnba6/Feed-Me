@@ -41,13 +41,13 @@
 											<div class="product-imitation">
 												<img
 													src=https://b.zmtcdn.com/data/pictures/9/16619359/a0bbef8466850dc5493c331757614c74.jpg?fit=around%7C200%3A200&crop=200%3A200%3B*%2C*
-													alt="300x300" class="img-responsive">
+													alt="600x300" class="img-responsive">
 											</div>
 											<div class="product-desc">
-												<span class="product-price"> $$$ </span> <small
-													class="text-muted">${restaurant.restCategory}</small> <a
-													href="<c:url value='/restaurant/main/${restaurant.restId}'/>"
-													class="product-name"> ${restaurant.name}</a>
+												<span class="product-price"> $$$ </span> 
+												<h3>
+													${restaurant.name}
+												</h3>
 
 												<div class="small m-t-xs">
 													<p>Opening: ${restaurant.opening} Closing:
@@ -60,7 +60,7 @@
 
 													<a
 														href="<c:url value='/restaurant/main/${restaurant.restId}'/>"
-														class="btn btn-xs btn-outline btn-primary">Info <i
+														class="btn btn-xs btn-outline btn-primary">Enter <i
 														class="fa fa-long-arrow-right"></i>
 													</a>
 												</div>
