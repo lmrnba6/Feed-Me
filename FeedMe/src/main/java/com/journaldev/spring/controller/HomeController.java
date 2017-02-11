@@ -3,7 +3,9 @@ package com.journaldev.spring.controller;
 import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.sql.Date;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -63,7 +66,7 @@ public class HomeController {
 		return "main";
 	}
 
-	@RequestMapping(value = {"/login","/restaurant/main/login","restaurant/login","account/login"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/login","/restaurant/main/login","restaurant/login","account/login"},method = RequestMethod.GET)
 	public String login(Model model,RedirectAttributes att) {
 		
 		return "login";
@@ -77,6 +80,35 @@ public class HomeController {
 
 		}
 		model.addAttribute("cart", cart);
+		
+		return "shoppingCart";
+	}
+	
+	@RequestMapping(value = "/cart/delete/{id}", method = RequestMethod.GET)
+	public String carteDelete(@PathVariable("id") Long id,Model model, HttpServletRequest request) {
+		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
+		cart.getMeals().remove(mealService.getById(id));
+		for (Iterator<Meal> iterator = cart.getMeals().iterator(); iterator.hasNext();) {
+		    Meal s =  iterator.next();
+		    if (s.getMeal_id() == id) {
+		        iterator.remove();
+		        break;
+		    }       
+		}
+		cart.setPrice(Utils.setCartPrice(cart));
+		cart.setSize(cart.getSize()-1);
+		model.addAttribute("cart", cart);
+		
+		return "shoppingCart";
+	}
+	
+	@RequestMapping(value = "/cart/refresh/{id}", method = RequestMethod.GET)
+	public String carteRefresh(@PathVariable("id") Long id,Model model, HttpServletRequest request) {
+		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
+		cart.getMeals().remove(mealService.getById(id));
+		
+		model.addAttribute("cart", cart);
+		
 		return "shoppingCart";
 	}
 

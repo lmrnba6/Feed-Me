@@ -40,8 +40,8 @@
 										<div class="ibox-content product-box">
 											<div class="product-imitation">
 												<img
-													src=https://b.zmtcdn.com/data/pictures/9/16619359/a0bbef8466850dc5493c331757614c74.jpg?fit=around%7C200%3A200&crop=200%3A200%3B*%2C*
-													alt="600x300" class="img-responsive">
+													src="${restaurant.restImageUrl}"
+													 width="100%" height="220px" class=" img-rounded">
 											</div>
 											<div class="product-desc">
 												<span class="product-price"> $$$ </span> 

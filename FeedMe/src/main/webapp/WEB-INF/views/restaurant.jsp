@@ -1,7 +1,10 @@
+<%@page import="com.journaldev.spring.model.*"%>
+<%@page import="com.journaldev.spring.util.*"%>
+<%@page import="com.journaldev.spring.model.*"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <html>
 <head>
 <title>Feed-Me!</title>
@@ -29,9 +32,8 @@
 		<div class="row">
 			<div class="col-md-9">
 				<div class="thumbnail">
-					<img class="img-responsive"
-						src="http://kalustyans.com/image/cache/catalog/category/super-foods-800x200.jpg"
-						alt="">
+					<img class="img-rounded restImage"
+						src="${restaurant.restImageUrl}">
 					<div class="caption-full">
 						<h4>
 							<a href="#">${restaurant.name}</a>
@@ -83,39 +85,48 @@
 					</div>
 
 					<div class="well" id="menuDiv">
+				
 						<c:forEach items="${menu}" var="m">
-							<hr>
+							
 							<div class="row">
 								<div class="col-md-12">
-									<div class="pull-left">${m.mealName}</div>
+									<div class="pull-left MealtName lead">${m.mealName}
+									</div>
 									<div class="pull-right">
-										<a href="<c:url value='/restaurant/addCart/${m.meal_id}'/>"
+										<a href="<c:url value='/restaurant/addCart/${restaurant.restId}/${m.meal_id}'/>"
 											class="btn btn-info btn-lg addMeal"> <span
 											class="glyphicon glyphicon-plus-sign"></span></a>
 									</div>
 									<p>$ ${m.price}</p>
 								</div>
-								<div class="pull-left">
-
-									<c:forEach begin="1" end="${mealRating}" varStatus="loop">
+								<div class="pull-left d-inline mealImg ">
+								<div class=" hidden-xs pull-left d-inline mealNames"><img src="${m.mealImageUrl}" alt="..." class="img-rounded" height="100px" width="200px" />
+								
+								<c:forEach begin="1" end="${m.type}" varStatus="loop">
 										<span class="glyphicon glyphicon-star "></span>
 									</c:forEach>
-									<c:forEach begin="1" end="${5-mealRating}" varStatus="loop">
+									<c:forEach begin="1" end="${5-m.type}" varStatus="loop">
 										<span class="glyphicon glyphicon-star-empty"></span>
 									</c:forEach>
-									<div>
-										<a
-											href="<c:url value='/restaurant/thumbsUpMeal/${m.meal_id}'/>"
+									
+									<a
+											href="<c:url value='/restaurant/thumbsUpMeal/${restaurant.restId}/${m.meal_id}'/>"
 											class="btn btn-info btn thumbs"> <span
 											class="glyphicon glyphicon-thumbs-up"></span></a> <a
-											href="<c:url value='/restaurant/thumbsDownMeal/${m.meal_id}'/>"
+											href="<c:url value='/restaurant/thumbsDownMeal/${restaurant.restId}/${m.meal_id}'/>"
 											class="btn btn-info btn thumbs"> <span
 											class="glyphicon glyphicon-thumbs-down"></span></a>
-									</div>
+								</div>
+								
+	
 								</div>
 
-								<p class="col-md-10">${m.discription}</p>
+								<div class="col-lg-10 d-table">
+										
+											<p>${m.discription}</p>
+									</div>
 							</div>
+							<hr>
 						</c:forEach>
 					</div>
 
@@ -125,7 +136,7 @@
 					<div class="well" id="ratingDiv">
 
 
-						<c:url var="login" value="/restaurant/main/comment/${id}"></c:url>
+						<c:url var="login" value="/restaurant/main/comment/${restaurant.restId}"></c:url>
 						<form class="form-signin form-inline col-md-12" action="${login}"
 							method="GET">
 

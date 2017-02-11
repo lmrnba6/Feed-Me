@@ -9,7 +9,7 @@
 <body>
 	<%
 		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
-	if(cart==null){
+	if(cart==null || cart.getSize()<0){
 		cart= new ShoppingCart();
 		cart.setPrice(0d);
 		cart.setSize(0);

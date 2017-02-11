@@ -57,34 +57,35 @@
 						<tr>
 							<td data-th="Product">
 								<div class="row">
-									<div class="col-sm-4 hidden-xs"><img src="http://bk-ca-prd.s3.amazonaws.com/sites/burgerking.ca/files/Thumb_0000_Burgers.jpg" alt="..." class="img-responsive"/></div>
+									<div class="col-sm-4 hidden-xs"><img src="${meal.mealImageUrl}" alt="..." class="img-responsive"/></div>
 									<div class="col-sm-8">
-										<h4 class="nomargin">Product 1</h4>
-										<p>Quis aute iure reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Lorem ipsum dolor sit amet.</p>
+										<h4 class="nomargin">${meal.mealName}</h4>
+										<p>${meal.discription}</p>
 									</div>
 								</div>
 							</td>
-							<td data-th="Price">$ ${cart.price}</td>
+							<td data-th="Price">$ ${meal.price}</td>
 							<td data-th="Quantity">
 								<input type="number" class="form-control text-center" value="1">
 							</td>
-							<td data-th="Subtotal" class="text-center">${cart.price}</td>
+							<td data-th="Subtotal" class="text-center">${meal.price}</td>
 							<td class="actions" data-th="">
-								<button class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
-								<button class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></button>								
+								<a href="<c:url value='/cart/refresh/${meal.meal_id}'/>" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></a>
+								<a href="<c:url value='/cart/delete/${meal.meal_id}'/>" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>								
 							</td>
 						</tr>
 					</tbody>
-					<tfoot>
+					
 					</c:forEach>
+					<tfoot>
 						<tr class="visible-xs">
 							<td class="text-center"><strong>Total ${cart.price}</strong></td>
 						</tr>
 						<tr>
-							<td><a href="#" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+							<td><a href="<c:url value='/'/>" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center"><strong>Total $ ${cart.price}</strong></td>
-							<td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+							<td><a href="<c:url value='/'/>" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 				</table>

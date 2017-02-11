@@ -50,6 +50,8 @@ public class RestaurantController {
 	private MenuService menuService;
 	@Autowired
 	private MealRatingService mealRatingService;
+	@Autowired
+	private ShoppingCartService cartService ;
 
 	@RequestMapping(value = "/restaurant/list", method = RequestMethod.GET)
 	public String restaurantInfo(Model model) {
@@ -69,7 +71,9 @@ public class RestaurantController {
 			@RequestParam("comment") String comment, HttpServletRequest request,RedirectAttributes att) {
 
 		User user = (User) request.getSession().getAttribute("user");
+		
 		if (user == null) {
+			model.addAttribute(restaurantService.getById(id));
 			model.addAttribute("ok", "ok");
 			return "login";
 		}
@@ -85,13 +89,13 @@ public class RestaurantController {
 
 	}
 
-	@RequestMapping(value = "/restaurant/addCart/{id}", method = RequestMethod.GET)
-	public String restaurantAdd(@PathVariable("id") Long id, Model model, HttpServletRequest request,
+	@RequestMapping(value = "/restaurant/addCart/{restId}/{mealId}", method = RequestMethod.GET)
+	public String restaurantAdd(@PathVariable("restId") Long restId,@PathVariable("mealId") Long mealId, Model model, HttpServletRequest request,
 			RedirectAttributes attribute) {
 
 		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
 		User user = (User) request.getSession().getAttribute("user");
-		Meal m = mealService.getById(id);
+		Meal m = mealService.getById(mealId);
 
 		if (cart == null) {
 
@@ -101,75 +105,82 @@ public class RestaurantController {
 			cart.setSize(cart.getSize() + 1);
 		}
 		cart.getMeals().add(m);
-
-		model.addAttribute("cart", cart);
-		model.addAttribute("restaurant", restaurantService.getById(id));
+		cart.setPrice(Utils.setCartPrice(cart));
 		if (user == null) {
+			model.addAttribute(restaurantService.getById(restId));
+			model.addAttribute(mealService.getById(mealId));
+			model.addAttribute("cart", cart);
 			model.addAttribute("ok", "ok");
 			return "login";
 		}
-
+		model.addAttribute("cart", cart);
+		Utils.restaurantInfoToModel(restId, menuService, mealRatingService, model, restaurantService, restRatingService,attribute);
 		return "restaurant";
 	}
 
-	@RequestMapping(value = "/restaurant/thumbsUpRest/{id}", method = RequestMethod.GET)
-	public String restaurantThumsUpRest(@PathVariable("id") Long id, Model model, HttpServletRequest request, RedirectAttributes att) {
+	@RequestMapping(value = "/restaurant/thumbsUpRest/{restId}", method = RequestMethod.GET)
+	public String restaurantThumsUpRest(@PathVariable("restId") Long restId, Model model, HttpServletRequest request, RedirectAttributes att) {
 
 		User user = (User) request.getSession().getAttribute("user");
-
+		
 		if (user == null) {
 			model.addAttribute("ok", "ok");
-
+			model.addAttribute("restaurant", restaurantService.getById(restId));
 			return "login";
 		}
-		
-		Utils.addRestRate(id, user, 5,restaurantService,restRatingService);
-		
-		Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,att);
+
+		Utils.restaurantInfoToModel(restId, menuService, mealRatingService, model, restaurantService, restRatingService,att);
+		Utils.addRestRate(restId, user, 5,restaurantService,restRatingService);
 		return "restaurant";
 	}
 
 	
 
-	@RequestMapping(value = "/restaurant/thumbsUpMeal/{id}", method = RequestMethod.GET)
-	public String restaurantThumsUpMeal(@PathVariable("id") Long id, Model model,HttpServletRequest request,RedirectAttributes att) {
+	@RequestMapping(value = "/restaurant/thumbsUpMeal/{restId}/{mealId}", method = RequestMethod.GET)
+	public String restaurantThumsUpMeal(@PathVariable("restId") Long restId,@PathVariable("mealId") Long mealId, Model model,HttpServletRequest request,RedirectAttributes att) {
 		User user = (User) request.getSession().getAttribute("user");
-
 		if (user == null) {
 			model.addAttribute("ok", "ok");
-
+			model.addAttribute("restaurant", restaurantService.getById(restId));
 			return "login";
 		}
-		Utils.addMealRate(id, user, 5, mealService, mealRatingService);
-		Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,att);
+		
+		Utils.addMealRate(mealId, user, 5, mealService, mealRatingService);
+		Meal meal = mealService.getById(mealId);
+		meal.setType(String.valueOf(Utils.mealRating(Utils.mealRatingById(mealRatingService.list(), mealId), mealId)));
+		mealService.update(meal);
+		
+		Utils.restaurantInfoToModel(restId, menuService, mealRatingService, model, restaurantService, restRatingService,att);
 		return "restaurant";
 	}
 
-	@RequestMapping(value = "/restaurant/thumbsDownRest/{id}", method = RequestMethod.GET)
-	public String restaurantThumsDownRest(@PathVariable("id") Long id, Model model,HttpServletRequest request,RedirectAttributes att) {
+	@RequestMapping(value = "/restaurant/thumbsDownRest/{restId}", method = RequestMethod.GET)
+	public String restaurantThumsDownRest(@PathVariable("restId") Long restId, Model model,HttpServletRequest request,RedirectAttributes att) {
 		User user = (User) request.getSession().getAttribute("user");
-
 		if (user == null) {
 			model.addAttribute("ok", "ok");
-
+			model.addAttribute("restaurant", restaurantService.getById(restId));
 			return "login";
 		}
-		Utils.addRestRate(id, user, 0,restaurantService,restRatingService);
-		Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,att);
+		
+		Utils.addRestRate(restId, user, 0,restaurantService,restRatingService);
+		Utils.restaurantInfoToModel(restId,menuService, mealRatingService, model, restaurantService, restRatingService,att);
 		return "restaurant";
 	}
 
-	@RequestMapping(value = "/restaurant/thumbsDownMeal/{id}", method = RequestMethod.GET)
-	public String restaurantThumsDownMeal(@PathVariable("id") Long id, Model model,HttpServletRequest request,RedirectAttributes att) {
+	@RequestMapping(value = "/restaurant/thumbsDownMeal/{restId}/{mealId}", method = RequestMethod.GET)
+	public String restaurantThumsDownMeal(@PathVariable("restId") Long restId,@PathVariable("mealId") Long mealId, Model model,HttpServletRequest request,RedirectAttributes att) {
 		User user = (User) request.getSession().getAttribute("user");
-
 		if (user == null) {
 			model.addAttribute("ok", "ok");
+			model.addAttribute("restaurant", restaurantService.getById(restId));
 			return "login";
 		}
-		Utils.addMealRate(id, user, 0, mealService, mealRatingService);
-
-		Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,att);
+		Utils.addMealRate(mealId, user, 0, mealService, mealRatingService);
+		Meal meal = mealService.getById(mealId);
+		meal.setType(String.valueOf(Utils.mealRating(Utils.mealRatingById(mealRatingService.list(), mealId), mealId)));
+		mealService.update(meal);	
+		Utils.restaurantInfoToModel(restId, menuService, mealRatingService, model, restaurantService, restRatingService,att);
 		return "restaurant";
 	}
 

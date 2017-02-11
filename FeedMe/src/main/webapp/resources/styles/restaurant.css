@@ -22,6 +22,10 @@ body {
     
 }
 
+.mealImg{
+	padding-bottom: 50px;
+}
+
 #hearts { color: #ee8b2d;}
 #hearts-existing { color: #ee8b2d;}
 
@@ -86,6 +90,19 @@ p{
     color: black;
 }
 
+.thumbnail .restImage{
+	height:200px;
+}
+
+.mealNames{
+	width:100px;
+	height:100px;
+}
+
+.resName , .hidden-xs{
+	padding-left=0;
+	display: block;
+}
 .widget-products li>a:after {
     content: "\f138";
     font-family: FontAwesome;
