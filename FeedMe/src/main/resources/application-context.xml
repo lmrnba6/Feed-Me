@@ -41,6 +41,12 @@
 		</property>
 	</bean>
 	
+    <!-- Autodetecting annotated Spring components within packages -->
+    <context:component-scan base-package="com.manning.sdmia.web"/>
+
+    <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="cacheSeconds" value="0" />
+    </bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
 

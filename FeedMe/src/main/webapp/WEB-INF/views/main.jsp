@@ -19,9 +19,24 @@
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/styles/header.css" />
 <meta name="viewport" content="width=device-width, initial-scale=1">
-">
+
 </head>
 <body>
+
+	<div class="carousel slide carousel-fade" data-ride="carousel"
+		data-interval="100000">
+		>
+
+		<!-- Wrapper for slides -->
+		<div class="carousel-inner" role="listbox">
+			<div class="item active"></div>
+			<div class="item"></div>
+			<div class="item"></div>
+			<div class="item"></div>
+			<div class="item"></div>
+			<div class="item"></div>
+		</div>
+	</div>
 
 	<jsp:include page="header.jsp" />
 	<div class="container" id="mainBody">
@@ -34,11 +49,12 @@
 					<h1>Check out the restaurants near you!</h1>
 					<div class="form-group">
 						<input type="search" placeholder="Where are you!"
-							class="form-control form-control-lg">
+							class="form-control input-lg form-control-lg">
 						<button
 							onclick="window.location.href='<c:url value='/restaurant/list'/>'"
 							class="btn btn-lg " type="button">Search</button>
 					</div>
+
 					<!-- /form-group -->
 				</form>
 				<!-- /.max-width on this form -->
@@ -48,7 +64,6 @@
 
 		</div>
 	</div>
-
 
 </body>
 </html>

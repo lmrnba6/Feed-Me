@@ -1,11 +1,20 @@
+<%@page import="com.journaldev.spring.model.ShoppingCart"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ page session="false"%>
+<%@ page session="true"%>
 <script src="<%=request.getContextPath()%>/resources/scripts/account.js"></script>
 <html>
 <head>
 <body>
+	<%
+		ShoppingCart cart = (ShoppingCart) session.getAttribute("cart");
+	if(cart==null || cart.getSize()<0){
+		cart= new ShoppingCart();
+		cart.setPrice(0d);
+		cart.setSize(0);
+	}
+	%>
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -31,7 +40,7 @@
 
 							<li><a href="<c:url value='/account/cart'/>"><span
 									class="glyphicon glyphicon-shopping-cart"></span>
-									$ ${cart.price} /  items</a></li>
+									<%=cart.getSize() %> items</a></li>
 							<li><a href=""><span class="glyphicon glyphicon-book"></span>
 									Help </a></li>
 						</c:when>
@@ -42,7 +51,7 @@
 									class="glyphicon glyphicon-log-in"></span> Register</a></li>
 							<li><a href="<c:url value='/account/cart'/>"><span
 									class="glyphicon glyphicon-shopping-cart"></span>
-									$ ${cart.price} / ${cart.size} items</a></li>
+									<%=cart.getSize()%> items</a></li>
 							<li><a href="register"><span
 									class="glyphicon glyphicon-book"></span> Help</a></li>
 						</c:otherwise>

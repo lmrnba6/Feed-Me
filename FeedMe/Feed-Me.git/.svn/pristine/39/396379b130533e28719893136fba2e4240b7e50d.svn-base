@@ -1,0 +1,35 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto:300);
+
+
+
+.col-md-12 a {
+	font-size: 20px;
+	color: white;
+	text-shadow: black 0.1em 0.1em 0.2em;
+	font-weight: bold;
+}
+
+.nav {
+  background-color: black;
+}
+
+
+.navbar #mynavbar ul li a{
+	color: #fff;
+}
+.navbar {
+	
+	font-size: 20px;
+	background-color: black;
+	box-shadow: 2px 2px 2px white;
+	height:100px;
+}
+
+div ul li a{
+	margin-top: 20px;
+}
+
+
+
+
+

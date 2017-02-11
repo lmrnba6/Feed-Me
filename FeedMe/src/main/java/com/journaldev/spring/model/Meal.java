@@ -27,11 +27,18 @@ public class Meal {
 	@Column(name = "MEAL_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long meal_id;
+	@Column(name = "MEAL_NAME")
 	private String mealName;
+	@Column(name = "DESCRIPTION")
 	private String discription;
+	@Column(name = "PRICE")
 	private Double price;
+	@Column(name = "TYPE")
 	private String type;
+	@Column(name = "IS_AVAILABLE")
 	private boolean isAvailable;
+	@Column(name = "MEAL_IMAGE_URL")
+	private String mealImageUrl;
 	@ManyToOne
 	@JoinColumn(name ="MENU_ID")
 	private Menu menu;

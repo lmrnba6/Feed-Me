@@ -46,7 +46,7 @@ public class Restaurant {
 	@Column(name = "CITY")
 	private String city;
 	@Column(name = "ZIP")
-	private Integer zip;
+	private String zip;
 	@OneToOne
 	@JoinColumn(name = "REST_CATEGORY_ID")
 	private RestCategory restCategory;
@@ -54,5 +54,7 @@ public class Restaurant {
 	private String ownerLastName;
 	@Column(name = "OWNER_FIRSTNAME")
 	private String ownerfirstName;
+	@Column(name = "REST_IMAGE_URL")
+	private String restImageUrl;
 
 }

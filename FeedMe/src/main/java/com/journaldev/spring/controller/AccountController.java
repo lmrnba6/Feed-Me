@@ -177,13 +177,5 @@ public class AccountController {
 
 	}
 
-	@RequestMapping(value = "/account/logout", method = RequestMethod.GET)
-	public String logoutInfo(Model model, HttpSession session, SessionStatus status) {
-		status.setComplete();
-		session.removeAttribute("user");
-		session.removeAttribute("check");
-
-		return "redirect:/";
-	}
 
 }
