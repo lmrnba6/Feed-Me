@@ -19,7 +19,7 @@ import lombok.Setter;
 @Setter @Getter
 public class FeedBack {
     @Id
-    @Column(name="ID")
+    @Column(name="FEEDBACK_ID")
     @GeneratedValue(strategy=GenerationType.IDENTITY)
     private Long feedBackId;
     @Column(name="SUBJECT")

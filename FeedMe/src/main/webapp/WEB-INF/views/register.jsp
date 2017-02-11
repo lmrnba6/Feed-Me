@@ -37,25 +37,31 @@
 		<c:url var="login" value="/registered"></c:url>
 		<form class="form-signin" action="${login}" method="Post">
 		<c:if test="${!empty message}">
-					<div class="alert alert-success">
+					<div class="alert alert-danger">
 						<strong></strong> ${message}
 					</div>
 				</c:if>
 			<h2 class="form-signin-heading">Create account</h2>
-			<br> <label>Username</label>
+			<br> <label>Last name</label>
+			<input type="text" class="form-control" name="firstName"
+				placeholder="" required autofocus value= "${lastName}" /> <br> 
+			<label>FirstName</label>
+			<input type="text" class="form-control" name="lastName"
+				placeholder="" required autofocus value= "${firstName}" /> <br> 
+			<label>Username</label>
 			<input type="text" class="form-control" name="userName"
-				placeholder="" required autofocus /> <br> 
+				placeholder="" required autofocus value= "${userName}" /> <br> 
 			<label>Email</label>
 			<input type="email" class="form-control" name="email"
-				placeholder="" required /><br>	
+				placeholder="" required value ="${email}"/><br>	
 			<label>Password</label>
 			<input type="password" class="form-control" name="password"
-				placeholder="At least 6 characters " required /> <br>
+				placeholder="At least 6 characters " required /> 
 				<label>Password again</label>
 			<input type="password" class="form-control" name="password2"
 				placeholder="" required /> <br>
 				
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Create your Feed-Me account</button>
+			<button class="btn btn-lg btn-danger btn-block" type="submit">Create your Feed-Me account</button>
 			<br>
 			<p>By creating an account, you agree to Amazon's Conditions of Use and Privacy Notice. </p>
 		</form>

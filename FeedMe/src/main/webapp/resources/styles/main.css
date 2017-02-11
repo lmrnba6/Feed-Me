@@ -1,11 +1,11 @@
 /* Remove the navbar's default margin-bottom and rounded borders */
 #mainBody {
-	height: 700px;
+	height: 100%;
 }
 
 html, body {
-/* 	background-image: url("https://res.cloudinary.com/grubhub-marketing/image/upload/v1479505943/Thanksgiving/Hero/Seamless/Desktop/Unauthenticated/SL_Thanksgiving_Hero1200x490_Unauthenticated_FINAL.jpg");
- */	-webkit-background-size: 100% auto;
+ 	background-image: url("https://media.timeout.com/images/102853921/image.jpg");
+ 	-webkit-background-size: 100% auto;
 	-moz-background-size: 100% auto;
 	-ms-background-size: 100% auto;
 	-o-background-size: 100% auto;

@@ -11,6 +11,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -25,11 +27,15 @@ import lombok.Setter;
 public class ShoppingCart {
 
 	@Id
-	@Column(name = "cart_id")
+	@Column(name = "CART_ID")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer cartId;
+	private Long cartId;
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "CART_MEAL" , joinColumns = {
+			@JoinColumn(name = "MEAL_ID", nullable = false, updatable = false) },
+			inverseJoinColumns = { @JoinColumn(name = "CART_ID",
+					nullable = false, updatable = false) })
 	private Set<Meal> meals = new HashSet<Meal>();
 
 	@Column(name = "price")

@@ -46,8 +46,7 @@
 									<form action="${name}" method="GET">
 										<div class="row" id="name">
 											<div class="col-sm-5 form-group">
-											<label>First name</label>
-												<label>First Name</label> <input type="text"
+												<label>First name</label> <input type="text"
 													value="${user.firstName}"
 													placeholder="Enter First Name Here.." name="firstName"
 													class="form-control" required disabled="disabled">
@@ -166,7 +165,7 @@
 										<div class="col-sm-12 form-group">
 											<!-- <button type="submit" class="btn btn-success" id="save" disabled="disabled">Save</button> -->
 											<a href="<c:url var="login" value="/account/info"></c:url>"
-												class="btn btn-danger">Cancel</a>
+												class="btn btn-danger btn-lg">Cancel</a>
 										</div>
 
 									</div>
@@ -178,6 +177,5 @@
 			</div>
 		</div>
 	</div>
-	<jsp:include page="footer.jsp" />
 </body>
 </html>

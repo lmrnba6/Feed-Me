@@ -45,11 +45,11 @@
 			</c:if>
 			<h2 class="form-signin-heading">Sign in</h2>
 			<br> <label>Username</label> <input type="text"
-				class="form-control" name="userName" placeholder="Username" required
+				class="form-control" data-minlength="6" name="userName" placeholder="Username" required
 				autofocus /> <br> <label>Password</label>  <input
 				type="password" class="form-control" name="password"
-				placeholder="Password" required /><a href="#">Forgot password</a> <p></p>
-			<button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
+				placeholder="Password" data-minlength="6" required /><a href="#">Forgot password</a> <p></p>
+			<button class="btn btn-lg btn-danger btn-block" type="submit">Login</button>
 		</form>
 		
 	</div>

@@ -18,32 +18,37 @@
 	href="<%=request.getContextPath()%>/resources/styles/main.css" />
 <link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/styles/header.css" />
-<meta name="viewport" content="width=device-width, initial-scale=1">">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+">
 </head>
 <body>
 
-<jsp:include page="header.jsp" />
-<div class="container" id="mainBody">
-	<div class="featurette">
-   <div class="featurette-inner text-center">
-      <form role="form" class="search has-button">
-         <h3 class="no-margin-top h1">Order food delivery online from your favorite local restaurants</h3>
-         <br>
-         <h1>Check out the restaurants near you!</h1>
-         <div class="form-group">
-            <input type="search" placeholder="Where are you!" class="form-control form-control-lg">
-            <button onclick="window.location.href='<c:url value='/restaurant/list'/>'" class="btn btn-lg " type="button">Search</button>
-         </div>
-         <!-- /form-group -->
-      </form>
-      <!-- /.max-width on this form -->
+	<jsp:include page="header.jsp" />
+	<div class="container" id="mainBody">
+		<div class="featurette">
+			<div class="featurette-inner text-center">
+				<form role="form" class="search has-button">
+					<h3 class="no-margin-top h1">Order food delivery online from
+						your favorite local restaurants</h3>
+					<br>
+					<h1>Check out the restaurants near you!</h1>
+					<div class="form-group">
+						<input type="search" placeholder="Where are you!"
+							class="form-control form-control-lg">
+						<button
+							onclick="window.location.href='<c:url value='/restaurant/list'/>'"
+							class="btn btn-lg " type="button">Search</button>
+					</div>
+					<!-- /form-group -->
+				</form>
+				<!-- /.max-width on this form -->
 
-   </div>
-   <!-- /.featurette-inner (display:table-cell) -->
+			</div>
+			<!-- /.featurette-inner (display:table-cell) -->
 
-</div>
-</div>
-	
+		</div>
+	</div>
+
 
 </body>
 </html>

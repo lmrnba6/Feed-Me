@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,25 +38,25 @@ public class HomeController {
 	private ShoppingCartService cartService;
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String main(Model model) {
-		
+	public String main(Model model, HttpServletRequest request) {
+
 		return "main";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public String login(Model model) {
-		
+
 		return "login";
 	}
 
 	@RequestMapping(value = "/cart", method = RequestMethod.GET)
 	public String homeCart(Model model, HttpServletRequest request) {
 		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
-		if (cart == null){
-			cart = new ShoppingCart(); 
-			
+		if (cart == null) {
+			cart = new ShoppingCart();
+
 		}
-		model.addAttribute("cart",cart);
+		model.addAttribute("cart", cart);
 		return "shoppingCart";
 	}
 
@@ -65,29 +66,20 @@ public class HomeController {
 			Model model, RedirectAttributes att, HttpServletRequest request) {
 
 		boolean check = this.userService.checkLogin(userName, password);
-		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
+
 		User user = null;
 		if (!check) {
 			return "redirect:/denied";
 		} else {
 			user = userService.getByName(userName);
 			model.addAttribute("user", user);
-			if (cart != null) {
-				Set<Meal> userMeals = cart.getMeals();
-				cart = cartService.getByUser(user);
-				if (cart != null) {
-					for (Meal m : userMeals) {
-						cart.getMeals().add(m);
-					}
-				} else {
-					cart.setUser(user);
-				}
+			ShoppingCart cart = new ShoppingCart();
+			if (att.getFlashAttributes() != null) {
 
-			} else {
-				cart = cartService.getByUser(user);
-
+				return "restaurant";
 			}
 			model.addAttribute("cart", cart);
+
 			return "redirect:/";
 		}
 
@@ -95,8 +87,8 @@ public class HomeController {
 
 	@RequestMapping(value = "/registered", method = RequestMethod.POST)
 	public String registred(@RequestParam("userName") String userName, @RequestParam("password") String password,
-			@RequestParam("email") String email,
-			@RequestParam("password2") String password2, Model model)
+			@RequestParam("email") String email, @RequestParam("lastName") String lastName,
+			@RequestParam("firstName") String firstName, @RequestParam("password2") String password2, Model model)
 			throws NoSuchAlgorithmException, NoSuchProviderException {
 
 		boolean check = true;
@@ -130,6 +122,8 @@ public class HomeController {
 			password = SecurePassword.getSecurePassword(password);
 			user.setUserPassword(password);
 			user.setEmail(email);
+			user.setLastName(lastName);
+			user.setFirstName(firstName);
 			user.setEntryDate(new Date(new java.util.Date().getTime()));
 			userService.add(user);
 			ShoppingCart cart = new ShoppingCart();
@@ -141,6 +135,10 @@ public class HomeController {
 			return "login";
 		} else {
 			model.addAttribute("message", message);
+			model.addAttribute("firstName", firstName);
+			model.addAttribute("lastName", lastName);
+			model.addAttribute("userName", userName);
+			model.addAttribute("email", email);
 			return "register";
 		}
 

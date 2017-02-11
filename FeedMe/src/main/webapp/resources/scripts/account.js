@@ -33,6 +33,7 @@ $(document).ready(function() {
 	$('#editCard').click(function() {
 		$(".container input").prop("disabled", false);
 		$(".container select").prop("disabled", false);
+		$(".container button").prop("disabled", false);
 		document.getElementsByName("firstName")[0].focus();
 
 	});

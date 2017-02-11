@@ -20,6 +20,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.journaldev.spring.model.Meal;
+import com.journaldev.spring.model.Menu;
 import com.journaldev.spring.model.RestRating;
 import com.journaldev.spring.model.Restaurant;
 import com.journaldev.spring.model.ShoppingCart;
@@ -28,6 +29,7 @@ import com.journaldev.spring.service.MealService;
 import com.journaldev.spring.service.MenuService;
 import com.journaldev.spring.service.RestRatingService;
 import com.journaldev.spring.service.RestaurantService;
+import com.journaldev.spring.service.ShoppingCartService;
 import com.journaldev.spring.service.UserService;
 import com.journaldev.spring.util.Utils;
 
@@ -36,13 +38,13 @@ import com.journaldev.spring.util.Utils;
 public class RestaurantController {
 
 	@Autowired
-	private UserService userService;
-	@Autowired
 	private RestaurantService restaurantService;
 	@Autowired
 	private RestRatingService restRatingService;
 	@Autowired
 	private MealService mealService;
+	@Autowired
+	private ShoppingCartService cartService;
 	@Autowired
 	private MenuService menuService;
 
@@ -62,48 +64,32 @@ public class RestaurantController {
 		model.addAttribute("rating", rating);
 		model.addAttribute("ratingSize", rating.size());
 		model.addAttribute("starsOn", stars);
-		Meal m = new Meal();
-		m.setMeal_id(1L);
-		m.setMealName("pizza");
-		Set<Meal> l = new HashSet<Meal>();
-		l.add(m);
-		l.add(m);
-		l.add(m);
-		l.add(m);
-		l.add(m);
-		menuService.getByName(restaurant.getName()).setMeal(l);
-		//restaurant.getgetMenu().setMeal(l);
-		model.addAttribute("menu", l);
-
+		Menu menu = menuService.getByName(String.valueOf(restaurant.getRestId()));
+		// Meal m = new Meal();
+		// m.setMenu(menu);
+		// mealService.add(m);
+		// menu.getMeal().add(m);
+		// menuService.update(menu);
+		model.addAttribute("menu", menu.getMeal());
 		return "restaurant";
 	}
 
 	@RequestMapping(value = "/restaurant/addCart/{id}", method = RequestMethod.GET)
-	public String restaurantAdd(@PathVariable("id") Long id, Model model, HttpServletRequest request, RedirectAttributes attribute) {
+	public String restaurantAdd(@PathVariable("id") Long id, Model model, HttpServletRequest request,
+			RedirectAttributes attribute) {
 
 		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
-		User user = (User)  request.getSession().getAttribute("user");
-		
-		if(cart==null)
-			cart= new ShoppingCart();
-		
+		User user = (User) request.getSession().getAttribute("user");
 		Meal m = mealService.getById(id);
 
-		if (user!=null) {
-			Set<Meal> l = cart.getMeals();
-			l.add(m);
-			cart.setMeals(l);
-			cart.setUser(user);
-			cart.setSize(cart.getMeals().size());
-			model.addAttribute("cart", cart);
-		} else {
-			model.addAttribute("meal", m);
-			ShoppingCart cart2 = new ShoppingCart();
+		if (cart == null)
+			cart = new ShoppingCart();
 			cart.getMeals().add(m);
-			attribute.addFlashAttribute("cart", cart2);
+		model.addAttribute("cart", cart);
+		if (user == null) {
+			attribute.addFlashAttribute("login", "message");
 			return "redirect:/login";
 		}
-
 		return "restaurant";
 	}
 
