@@ -64,7 +64,7 @@
 									</div>
 								</div>
 							</td>
-							<td data-th="Price">$ ${meal.price}</td>
+							<td data-th="Price">${meal.price}</td>
 							<td data-th="Quantity">
 								<input type="number" class="form-control text-center" value="1">
 							</td>

@@ -50,20 +50,6 @@
 				</div>
 			</c:if>
 			<h2 class="form-signin-heading">Sign in</h2>
-			<div class="social">
-				<button class="loginBtn loginBtn--facebook">Facebook</button>
-
-				<div class="g-signin2 pull-right" data-onsuccess="onSignIn"></div>
-
-			</div>
-			<br>
-			<div
-				style="width: 100%; height: 20px; border-bottom: 1px solid black; text-align: center">
-				<span
-					style="font-size: 20px; background-color: #fff; padding: 0 10px;">
-					Or <!--Padding is optional-->
-				</span>
-			</div>
 			<br> <label>Username</label> <input type="text"
 				class="form-control" data-minlength="6" name="userName"
 				placeholder="Username" required autofocus /> <br> <label>Password</label>
@@ -72,37 +58,21 @@
 				password</a>
 			<p></p>
 			<button class="btn btn-lg btn-danger btn-block" type="submit">Login</button>
-
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 		</form>
-		<a href="#" id="signOut" onclick="signOut();"></a>
+		<a href="#" onclick="signOut();">Sign out</a>
 		<script>
-			function onSignIn(googleUser) {
-				var profile = googleUser.getBasicProfile();
-				console.log('ID: ' + profile.getId() + ' ' + 'Name: '
-						+ profile.getName()); // Do not send to your backend! Use an ID token instead.
-				console.log('Name: ' + profile.getName());
-				console.log('Image URL: ' + profile.getImageUrl());
-				console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-				if (confirm('Do you want to sign in using your Google account?')) {
-					location.href = "googleRegister/" + profile.getEmail()
-							+ "/" + profile.getName() + "/" + profile.getId()
-							+ "/";
-				} else {
-
-					$('#signOut').trigger('click');
-
-				}
-			}
-		</script>
-		<script type="text/javascript">
-			function signOut() {
-				var auth2 = gapi.auth2.getAuthInstance();
-				auth2.signOut().then(function() {
-					console.log('User signed out.');
-				});
+		function onSignIn(googleUser) {
+			  var profile = googleUser.getBasicProfile();
+			  alert('ID: ' + profile.getId()+' '+'Name: ' + profile.getName()); // Do not send to your backend! Use an ID token instead.
+			  console.log('Name: ' + profile.getName());
+			  console.log('Image URL: ' + profile.getImageUrl());
+			  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
 			}
+
 		</script>
+
 	</div>
 
 </body>

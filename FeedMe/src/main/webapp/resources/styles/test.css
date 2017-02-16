@@ -1,146 +1,94 @@
-.flipkart-navbar {
-	background-color: #399;
-	color: #FFFFFF;
-}
 
-.row1 {
-	padding-top: 10px;
-}
+/*
+    Note: It is best to use a less version of this file ( see http://css2less.cc
+    For the media queries use @screen-sm-min instead of 768px.
+    For .omb_spanOr use @body-bg instead of white.
+*/
 
-.row2 {
+html, body {
+	background-image: url(../images/main6.jpg);
+	-webkit-background-size: 100% auto;
+	-moz-background-size: 100% auto;
+	-ms-background-size: 100% auto;
+	-o-background-size: 100% auto;
+	background-size: 100% auto;
+	padding-top: 20px;
 	padding-bottom: 20px;
 }
 
-.flipkart-navbar-input {
-	padding: 11px 16px;
-	border-radius: 2px 0 0 2px;
-	border: 0 none;
-	outline: 0 none;
-	font-size: 15px;
+.container{
+	margin-top: 150px;
 }
 
-.flipkart-navbar-button {
-	background-color: #ffe11b;
-	border: 1px solid #ffe11b;
-	border-radius: 0 2px 2px 0;
-	color: #565656;
-	padding: 10px 0;
-	height: 43px;
-	cursor: pointer;
+.omb_login {
+	max-width: 100%;
+	padding: 15px 35px 45px;
+	margin: 0 auto;
+	background-color: #fff;
+	border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.cart-button {
-	background-color: #F63440;
-	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, .23), inset 1px 1px 0 0
-		hsla(0, 0%, 100%, .2);
-	padding: 10px 0;
-	text-align: center;
-	height: 41px;
-	border-radius: 2px;
-	font-weight: 500;
-	width: 120px;
-	display: inline-block;
-	color: #FFFFFF;
-	text-decoration: none;
-	color: inherit;
-	border: none;
-	outline: none;
+@media (min-width: 768px) {
+    .omb_row-sm-offset-3 div:first-child[class*="col-"] {
+        margin-left: 25%;
+    }
 }
 
-.cart-button:hover {
-	text-decoration: none;
-	color: #fff;
-	cursor: pointer;
+.omb_login .omb_authTitle {
+    text-align: center;
+	line-height: 300%;
 }
-
-.col-md-2 a:hover, .col-md-2 a {
-	color:#fff;
-	 text-decoration: none;
+	
+.omb_login .omb_socialButtons a {
+	color: white; // In yourUse @body-bg 
+	opacity:0.9;
 }
-
-.cart-svg {
-	display: inline-block;
-	width: 16px;
-	height: 16px;
-	vertical-align: middle;
-	margin-right: 8px;
+.omb_login .omb_socialButtons a:hover {
+    color: white;
+	opacity:1;    	
 }
+.omb_login .omb_socialButtons .omb_btn-facebook {background: #3b5998;}
+.omb_login .omb_socialButtons .omb_btn-twitter {background: #00aced;}
+.omb_login .omb_socialButtons .omb_btn-google {background: #c32f10;}
 
-.item-number {
-	border-radius: 3px;
-	background-color: rgba(0, 0, 0, .1);
-	height: 20px;
-	padding: 3px 6px;
-	font-weight: 500;
-	display: inline-block;
-	color: #fff;
-	line-height: 12px;
-	margin-left: 10px;
-}
 
-.upper-links {
-	display: inline-block;
-	padding: 0 11px;
-	line-height: 23px;
-	font-family: 'Roboto', sans-serif;
-	letter-spacing: 0;
-	color: inherit;
-	border: none;
-	outline: none;
-	font-size: 12px;
-}
-
-.dropdown {
+.omb_login .omb_loginOr {
 	position: relative;
-	display: inline-block;
-	margin-bottom: 0;
+	font-size: 1.5em;
+	color: #aaa;
+	margin-top: 1em;
+	margin-bottom: 1em;
+	padding-top: 0.5em;
+	padding-bottom: 0.5em;
 }
-
-.dropdown:hover {
-	background-color: #fff;
+.omb_login .omb_loginOr .omb_hrOr {
+	background-color: #cdcdcd;
+	height: 1px;
+	margin-top: 0px !important;
+	margin-bottom: 0px !important;
 }
-
-.dropdown:hover .links {
-	color: #000;
-}
-
-.dropdown:hover .dropdown-menu {
+.omb_login .omb_loginOr .omb_spanOr {
 	display: block;
-}
-
-.dropdown .dropdown-menu {
 	position: absolute;
-	top: 100%;
-	display: none;
-	background-color: #fff;
-	color: #333;
-	left: 0;
-	border: 0;
-	border-radius: 0;
-	box-shadow: 0 4px 8px -3px #555454;
-	margin: 0;
-	padding: 0;
+	left: 50%;
+	top: -0.6em;
+	margin-left: -1.5em;
+	background-color: white;
+	width: 3em;
+	text-align: center;
+}			
+
+.omb_login .omb_loginForm .input-group.i {
+	width: 2em;
+}
+.omb_login .omb_loginForm  .help-block {
+    color: red;
 }
 
-.links {
-	color: #fff;
-	text-decoration: none;
-}
-
-.links:hover {
-	color: #fff;
-	text-decoration: none;
-}
-
-.profile-links {
-	font-size: 12px;
-	font-family: 'Roboto', sans-serif;
-	border-bottom: 1px solid #e9e9e9;
-	display: block;
-	padding: 0 11px;
-	line-height: 23px;
-}
-
-.profile-li {
-	padding-top: 2px;
+	
+@media (min-width: 768px) {
+    .omb_login .omb_forgotPwd {
+        text-align: right;
+		margin-top:10px;
+ 	}		
 }

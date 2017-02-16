@@ -1,30 +1,21 @@
 package com.journaldev.spring.controller;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
-import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.journaldev.spring.model.Meal;
-import com.journaldev.spring.model.Menu;
 import com.journaldev.spring.model.RestRating;
-import com.journaldev.spring.model.Restaurant;
 import com.journaldev.spring.model.ShoppingCart;
 import com.journaldev.spring.model.User;
 import com.journaldev.spring.service.MealRatingService;
@@ -32,12 +23,10 @@ import com.journaldev.spring.service.MealService;
 import com.journaldev.spring.service.MenuService;
 import com.journaldev.spring.service.RestRatingService;
 import com.journaldev.spring.service.RestaurantService;
-import com.journaldev.spring.service.ShoppingCartService;
-import com.journaldev.spring.service.UserService;
 import com.journaldev.spring.util.Utils;
 
 @Controller
-@SessionAttributes({ "user", "cart" })
+@SessionAttributes({ "user", "cart" ,"lat", "lan" })
 public class RestaurantController {
 
 	@Autowired
@@ -50,18 +39,20 @@ public class RestaurantController {
 	private MenuService menuService;
 	@Autowired
 	private MealRatingService mealRatingService;
-	@Autowired
-	private ShoppingCartService cartService ;
 
-	@RequestMapping(value = "/restaurant/list", method = RequestMethod.GET)
-	public String restaurantInfo(Model model) {
 
-		model.addAttribute("restaurantList", restaurantService.list());
+	@RequestMapping(value = {"/restaurant/list/{city}","/googleRegister/{email}/{name}/{id}/restaurant/list/{city}"}, method = RequestMethod.GET)
+	public String restaurantInfo(@PathVariable ("city") String city, Model model) {
+		
+		model.addAttribute("restaurantList", Utils.getByCity(restaurantService, city));
 		return "restaurantList";
 	}
 
-	@RequestMapping(value = "/restaurant/main/{id}", method = RequestMethod.GET)
-	public String restaurantMain(@PathVariable("id") Long id, Model model, RedirectAttributes att) {
+	@RequestMapping(value = "/restaurant/list/{city}/main/{id}/{lat}/{lan}", method = RequestMethod.GET)
+	public String restaurantMain(@PathVariable("lat") String lat, @PathVariable("lan") String lan,@PathVariable("id") Long id, Model model, RedirectAttributes att) {
+		model.addAttribute("lan", lan);
+		model.addAttribute("lat", lat);
+		
 		Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,att);
 		return "restaurant";
 	}
@@ -83,13 +74,14 @@ public class RestaurantController {
 		rating.setRestaurant(restaurantService.getById(id));
 		rating.setReview(comment);
 		rating.setUser(user);
+		if(!Utils.checkDoubleComment(restRatingService, rating))
 		restRatingService.add(rating);
 		Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,att);
 		return "restaurant";
 
 	}
 
-	@RequestMapping(value = "/restaurant/addCart/{restId}/{mealId}", method = RequestMethod.GET)
+	@RequestMapping(value = "/restaurant/addCart/{restId}/{mealId}", method = {RequestMethod.GET,RequestMethod.POST})
 	public String restaurantAdd(@PathVariable("restId") Long restId,@PathVariable("mealId") Long mealId, Model model, HttpServletRequest request,
 			RedirectAttributes attribute) {
 
@@ -100,11 +92,16 @@ public class RestaurantController {
 		if (cart == null) {
 
 			cart = new ShoppingCart();
-			cart.setSize(1);
-		} else {
+			cart.setSize(0);
+		} 
+		
+		if(!Utils.checkDoubleMeal(m, cart)){
+			
+			cart.getMeals().add(m);
 			cart.setSize(cart.getSize() + 1);
 		}
-		cart.getMeals().add(m);
+		
+		
 		cart.setPrice(Utils.setCartPrice(cart));
 		if (user == null) {
 			model.addAttribute(restaurantService.getById(restId));
@@ -182,6 +179,16 @@ public class RestaurantController {
 		mealService.update(meal);	
 		Utils.restaurantInfoToModel(restId, menuService, mealRatingService, model, restaurantService, restRatingService,att);
 		return "restaurant";
+	}
+	
+	@RequestMapping(value = "restaurant/list/map/{lat}/{lan}", method = RequestMethod.GET)
+	public String map(@PathVariable("lat") String lat, @PathVariable("lan") String lan, Model model ) {
+		
+		
+		model.addAttribute("lan", lan);
+		model.addAttribute("lat", lat);
+		
+		return "map";
 	}
 
 }

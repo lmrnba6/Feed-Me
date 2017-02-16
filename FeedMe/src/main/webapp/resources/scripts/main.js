@@ -1,6 +1,12 @@
-$('.carousel').carousel({
+$(document).ready(function(){
 	
-	interval: 10000
-	
+
+
+	$(document).keypress(function(e) {
+	    if(e.which == 13) {
+	    	$('#enter').trigger('click');
+	    }
+	});
+
 
 });

@@ -49,6 +49,9 @@
     </bean>
 
 	<tx:annotation-driven transaction-manager="transactionManager" />
+	
+	
+	<mvc:annotation-driven ignore-default-model-on-redirect="true"/>
 
 	<bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager" p:sessionFactory-ref="sessionFactory" />
 

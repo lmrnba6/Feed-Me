@@ -66,7 +66,7 @@ public class HomeController {
 		return "main";
 	}
 
-	@RequestMapping(value = {"/login","/restaurant/main/login","restaurant/login","account/login"},method = RequestMethod.GET)
+	@RequestMapping(value = {"/login"},method = RequestMethod.GET)
 	public String login(Model model,RedirectAttributes att) {
 		
 		return "login";
@@ -211,7 +211,7 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value ={"/logout","/account/logout","/restaurant/addCart/logout"}, method = RequestMethod.GET)
+	@RequestMapping(value ={"/logout"}, method = RequestMethod.GET)
 	public String logout(Model model, HttpSession session, SessionStatus status) {
 		status.setComplete();
 		session.removeAttribute("user");
@@ -220,7 +220,7 @@ public class HomeController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = {"/register","/restaurant/main/register","restaurant/register"}, method = RequestMethod.GET)
+	@RequestMapping(value = {"/register"}, method = RequestMethod.GET)
 	public String register(Model model) {
 		model.addAttribute("message", "");
 		return "register";
@@ -231,9 +231,55 @@ public class HomeController {
 		return "denied";
 	}
 
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String test() {
-		return "test";
+	@RequestMapping(value = "/googleRegister/{email}/{name}/{id}", method = RequestMethod.GET)
+	public String googleRegistert(@PathVariable("email") String email,@PathVariable("name") String name,@PathVariable("id") String id, Model model) {
+		
+		boolean check = true;
+		String message = null;
+		User user = new User();
+		List<User> userList = this.userService.list();
+
+		for (User u : userList) {
+
+			if ((u.getUserName().equals(email)) && (u.getEmail().equals(email))) {
+				check = false;
+				message = "User exist already click on Google";
+				user=u;
+				break;
+			} 
+
+		}
+
+		if (check) {
+			
+			user.setUserName(email);
+			id = SecurePassword.getSecurePassword(id);
+			user.setUserPassword(id);
+			user.setEmail(email);
+			user.setLastName(name);
+			user.setFirstName(name);
+			user.setEntryDate(new Date(new java.util.Date().getTime()));
+			userService.add(user);
+			ShoppingCart cart = new ShoppingCart();
+			cart.setUser(user);
+			cart.setPrice(0d);
+			cart.setSize(0);
+			cartService.add(cart);
+			model.addAttribute("user", user);
+			return "main";
+		} else {
+			
+			model.addAttribute("user", user);
+			return "main";
+		}
+		
+	}
+
+	
+	@RequestMapping(value = "/loginGoogle", method = RequestMethod.GET)
+	public String loginGoogle() {
+		
+		return "socialLogged";
 	}
 
 }

@@ -39,7 +39,8 @@ public class AccountController {
 
 	@RequestMapping(value = "/account/cart", method = RequestMethod.GET)
 	public String homeCart(Model model, HttpServletRequest request) {
-
+		
+		
 		return "shoppingCart";
 	}
 
