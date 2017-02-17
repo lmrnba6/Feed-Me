@@ -29,7 +29,7 @@
 				class="list-group-item">Reviews</a>
 
 		</div>
-	</div>
+		<jsp:include page="map.jsp" />
 	</div>
 </body>
 </html>

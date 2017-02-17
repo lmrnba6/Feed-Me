@@ -123,4 +123,32 @@ public final class Utils {
 		}
 		return price;
 	}
+	
+	public static List<Restaurant> getByCity(RestaurantService restaurantService, String city) {
+
+		List<Restaurant> list = new ArrayList<Restaurant>();
+		for (Restaurant restaurant : restaurantService.list()) {
+			if (city.trim().toLowerCase().equals(restaurant.getCity().trim().toLowerCase()))
+				list.add(restaurant);
+		}
+		return list;
+	}
+	
+	public static boolean checkDoubleComment(RestRatingService rateService, RestRating rate) {
+
+		for (RestRating rating : rateService.list()) {
+			if ((rating.getUser().getUserId()==rate.getUser().getUserId())&& (rating.getReview().equals(rate.getReview())))
+				return true;
+		}
+		return false;
+	}
+	
+	public static boolean checkDoubleMeal(Meal meal, ShoppingCart cart) {
+
+		for (Meal m : cart.getMeals()) {
+			if (m.getMeal_id()==meal.getMeal_id())
+				return true;
+		}
+		return false;
+	}
 }

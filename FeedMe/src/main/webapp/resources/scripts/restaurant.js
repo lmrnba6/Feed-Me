@@ -17,6 +17,18 @@ $("#menu").click(function(){
     }, 500);
 });
 
-
+$("#addCart").click(function(){
+	
+	$.ajax({
+		type:'GET',
+		data: { restId:"${restaurant.restId}", mealId: "${m.restId}"},
+		url: '/FeedMe/restaurant/addCart/${restId}/${mealId}',
+			success: function(data){
+				
+				prompt("","");
+				
+			}		
+	});
+});
 
 });

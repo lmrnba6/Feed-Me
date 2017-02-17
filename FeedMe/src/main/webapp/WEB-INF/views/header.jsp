@@ -24,7 +24,7 @@
 						class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="<c:url value='/'/>"><img
-					src="<%=request.getContextPath()%>/resources/images/Logo.png" height="70" width="150" >
+					src="<%=request.getContextPath()%>/resources/images/Logo.png" height="70" width="150" ></a>
 			</div>
 			<div class="collapse navbar-collapse" id="myNavbar">
 				<ul class="nav navbar-nav">
@@ -33,7 +33,7 @@
 				<ul class=" nav navbar-nav navbar-right navbar-collapse">
 					<c:choose>
 						<c:when test="${!empty user}">
-							<li><a href="logout"><span
+							<li><a href="<c:url value='/logout'/>"><span
 									class="glyphicon glyphicon-log-in"></span> Logout </a></li>
 							<li><a href="<c:url value='/account/info'/>"><span
 									class="glyphicon glyphicon-user"></span> Hi ${user.firstName}</a></li>
@@ -45,9 +45,9 @@
 									Help </a></li>
 						</c:when>
 						<c:otherwise>
-							<li><a href="login"><span
+							<li><a href="<c:url value='/login'/>"><span
 									class="glyphicon glyphicon-log-in"></span> Login</a></li>
-							<li><a href="register"><span
+							<li><a href="<c:url value='/register'/>"><span
 									class="glyphicon glyphicon-log-in"></span> Register</a></li>
 							<li><a href="<c:url value='/account/cart'/>"><span
 									class="glyphicon glyphicon-shopping-cart"></span>

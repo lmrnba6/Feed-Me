@@ -3,9 +3,16 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page session="false"%>
 <html>
+<!--[if lt IE 7]> <html class="lt-ie9 lt-ie8 lt-ie7" lang="en"> <![endif]-->
+<!--[if IE 7]> <html class="lt-ie9 lt-ie8" lang="en"> <![endif]-->
+<!--[if IE 8]> <html class="lt-ie9" lang="en"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html lang="en">
+<!--<![endif]-->
 <head>
 <title>Feed-Me!</title>
 <meta charset="utf-8">
+<script src="https://apis.google.com/js/platform.js" async defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -13,92 +20,68 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 <link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/styles/register.css" />
-	<link rel="stylesheet"
+	href="<%=request.getContextPath()%>/resources/styles/login.css" />
+<link rel="stylesheet"
 	href="<%=request.getContextPath()%>/resources/styles/header.css" />
-	<link rel="stylesheet"
-	href="<%=request.getContextPath()%>/resources/styles/footer.css" />
-<meta name="viewport" content="width=device-width, initial-scale=1"></head>
+<meta name="google-signin-client_id"
+	content="422141561901-s4dahr1givvmalmh0otegv7fls62q8m7.apps.googleusercontent.com">
+<!--[if lt IE 9]><script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+</head>
 <body>
-<div id="wrapper">
-<div class="container-fluid">
-<div class="container">
+	<jsp:include page="header.jsp" />
 
-    <h1>Create account</h1>
-    
-	<div class="col-lg-12">
-	<div class="row">
-	<c:url var="login" value="/registered"></c:url>
-				<form action="${login}" method="Post">
-					<div class="col-sm-12">
-						<div class="row">
-						<c:if test="${!empty message}">
+
+	<div class="wrapper">
+
+
+		<c:url var="login" value="/registered"></c:url>
+		<form class="form-signin" action="${login}" method="Post">
+			<c:if test="${!empty message}">
 				<div class="alert alert-danger">
 					<strong></strong> ${message}
 				</div>
 			</c:if>
-							<div class="col-sm-6 form-group">
-								<label>First Name</label>
-								<input type="text" placeholder="Enter First Name Here.." name="firstName" class="form-control" required focus>
-							</div>
-							<div class="col-sm-6 form-group">
-								<label>Last Name</label>
-								<input type="text" placeholder="Enter Last Name Here.." name="lastName" class="form-control" required>
-							</div>
-						</div>					
-						<div class="form-group">
-							<label>Address</label>
-							<textarea placeholder="Enter Address Here.." name="address" rows="3" class="form-control" required></textarea>
-						</div>	
-						<div class="row">
-							<div class="col-sm-4 form-group">
-								<label>City</label>
-								<input type="text" placeholder="Enter City Name Here.." name="city" class="form-control" required>
-							</div>	
-							<div class="col-sm-4 form-group">
-								<label>State</label>
-								<input type="text" placeholder="Enter State Name Here.."  name="state" class="form-control" required>
-							</div>	
-							<div class="col-sm-4 form-group">
-								<label>Zip</label>
-								<input type="text" placeholder="Enter Zip Code Here.." name="zip" class="form-control" required>
-							</div>		
-						</div>
-						<div class="row">
-							<div class="col-sm-4 form-group">
-								<label>Username</label>
-								<input type="text" placeholder="Enter username Here.." name="userName" class="form-control" required>
-							</div>	
-							<div class="col-sm-4 form-group">
-								<label>password</label>
-								<input type="password" placeholder="Enter password Here.."  name="password" class="form-control" required>
-							</div>	
-							<div class="col-sm-4 form-group">
-								<label>Confirm password</label>
-								<input type="password" placeholder="confirm password Here.." name="password2" class="form-control" required>
-							</div>		
-						</div>						
-					<div class="row">
-							<div class="col-sm-6 form-group">
-								<label>Phone number</label>
-								<input type="text" placeholder="Enter phone number Here.." name="mobile" class="form-control" required>
-							</div>
-							<div class="col-sm-6 form-group">
-								<label>Email</label>
-								<input type="email" placeholder="Enter email Here.." name="email" class="form-control" required>
-							</div>
-						</div>
-						<p></p>	
-					<button type="submit" class="btn btn-lg btn-info">Register</button>					
-					</div>
-				</form> 
-				</div>
-				</div>
-				</div>
-				</div>
-				
+			<h2 class="form-signin-heading">Create account</h2>
+			<div>
+				<div class="g-signin2" data-onsuccess="onSignIn"></div>
+				<a class="btn btn-block btn-facebook"> <span
+					class="fa fa-facebook"></span> Sign
+				</a>
+			</div>
+			<br> <label>Last name</label> <input type="text"
+				class="form-control" name="firstName" placeholder="" required
+				autofocus value="${lastName}" /> <br> <label>FirstName</label>
+			<input type="text" class="form-control" name="lastName"
+				placeholder="" required autofocus value="${firstName}" /> <br>
+			<label>Username</label> <input type="text" class="form-control"
+				name="userName" placeholder="" required autofocus
+				value="${userName}" /> <br> <label>Email</label> <input
+				type="email" class="form-control" name="email" placeholder=""
+				required value="${email}" /><br> <label>Password</label> <input
+				type="password" class="form-control" name="password"
+				placeholder="At least 6 characters " required /> <label>Password
+				again</label> <input type="password" class="form-control" name="password2"
+				placeholder="" required /> <br>
 
-</div>
+			<button class="btn btn-lg btn-danger btn-block" type="submit">Create
+				your Feed-Me account</button>
+			<br>
+			<p>By creating an account, you agree to Amazon's Conditions of
+				Use and Privacy Notice.</p>
+		</form>
+
+	</div>
+	<script>
+		function onSignIn(googleUser) {
+			var profile = googleUser.getBasicProfile();
+			alert('ID: ' + profile.getId() + ' ' + 'Name: ' + profile.getName()); // Do not send to your backend! Use an ID token instead.
+			console.log('Name: ' + profile.getName());
+			console.log('Image URL: ' + profile.getImageUrl());
+			console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+
+		}
+	</script>
 </body>
 </html>

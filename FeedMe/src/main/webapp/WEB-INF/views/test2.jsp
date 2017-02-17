@@ -2,54 +2,47 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ page session="false"%>
-<script src="<%=request.getContextPath()%>/resources/scripts/account.js"></script>
-<html>
-<head>
-<body>
-	<nav class="navbar  navbar-fixed-top">
-		<div class="container-fluid">
-			<%-- <div class="navbar-header">
-				<button type="button" class="navbar-toggle" data-toggle="collapse"
-					data-target="#myNavbar">
-					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
-						class="icon-bar"></span>
-				</button>
-				<a class="navbar-brand" href="<c:url value='/'/>"><img
-					src="http://icons.iconarchive.com/icons/graphicloads/food-drink/32/icecream-icon.png">
-			</div> --%>
-			<div class="collapse navbar-collapse" id="myNavbar">
-				<ul class="nav navbar-nav">
-					<li><a href="test">Feed-Me</a></li>
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					<c:choose>
-						<c:when test="${!empty user}">
-							<li><a href="logout"><span
-									class="glyphicon glyphicon-log-in"></span> Logout </a></li>
-							<li><a href="<c:url value='/account/info'/>"><span
-									class="glyphicon glyphicon-user"></span> Hi ${user.firstName}</a></li>
 
-							<li><a href="<c:url value='/account/cart'/>"><span
-									class="glyphicon glyphicon-shopping-cart"></span>
-									$ ${cart.price} /  items</a></li>
-							<li><a href=""><span class="glyphicon glyphicon-book"></span>
-									Help </a></li>
-						</c:when>
-						<c:otherwise>
-							<li><a href="login"><span
-									class="glyphicon glyphicon-log-in"></span> Login</a></li>
-							<li><a href="register"><span
-									class="glyphicon glyphicon-log-in"></span> Register</a></li>
-							<li><a href="<c:url value='/cart'/>"><span
-									class="glyphicon glyphicon-shopping-cart"></span>
-									$ ${cart.price} / ${cart.size} items</a></li>
-							<li><a href="register"><span
-									class="glyphicon glyphicon-book"></span> Help</a></li>
-						</c:otherwise>
-					</c:choose>
-				</ul>
-			</div>
-		</div>
-	</nav>
-</body>
+<head>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Geocoding service</title>    
+  <script defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyB6CaUv5C6-tT2QBEdgJLt2bpAR18ZAbf4&callback=initMap"
+	type="text/javascript"></script>
+	  <body>
+<script>    
+        var geocoder;
+        var map;        
+        function codeAddress() {
+            geocoder = new google.maps.Geocoder();
+            var address = document.getElementById('address').value;
+            geocoder.geocode({ 'address': address }, function (results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {                       
+
+                    for (var component in results[0]['address_components']) {
+                        for (var i in results[0]['address_components'][component]['types']) {
+                            if (results[0]['address_components'][component]['types'][i] == "administrative_area_level_1") {
+                                state = results[0]['address_components'][component]['long_name'];
+                                alert(results[0]['address_components'][1]['long_name'] + ' , '  + state);
+                            }
+                        }
+                    }                                           
+                } else {
+                    alert('Invalid Zipcode');
+                }
+            });
+        }         
+
+    </script>
+  </head>
+
+    <div id="panel">
+      <input id="address" type="text" value="Sydney, NSW">
+      <input type="button" value="Geocode" onclick="codeAddress()">
+    </div>
+    <div id="map-canvas"></div>
+  </body>
 </html>
