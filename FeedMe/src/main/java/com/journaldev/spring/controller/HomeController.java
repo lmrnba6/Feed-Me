@@ -41,7 +41,7 @@ import com.journaldev.spring.util.SecurePassword;
 import com.journaldev.spring.util.Utils;
 
 @Controller
-@SessionAttributes({ "user", "cart" })
+@SessionAttributes({ "user", "cart", "restaurant", "menu" })
 public class HomeController {
 
 	@Autowired
@@ -59,16 +59,15 @@ public class HomeController {
 	@Autowired
 	private MealRatingService mealRatingService;
 
-
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main(Model model, HttpServletRequest request) {
 
 		return "main";
 	}
 
-	@RequestMapping(value = {"/login"},method = RequestMethod.GET)
-	public String login(Model model,RedirectAttributes att) {
-		
+	@RequestMapping(value = { "/login" }, method = RequestMethod.GET)
+	public String login(Model model, RedirectAttributes att) {
+
 		return "login";
 	}
 
@@ -80,35 +79,35 @@ public class HomeController {
 
 		}
 		model.addAttribute("cart", cart);
-		
+
 		return "shoppingCart";
 	}
-	
+
 	@RequestMapping(value = "/cart/delete/{id}", method = RequestMethod.GET)
-	public String carteDelete(@PathVariable("id") Long id,Model model, HttpServletRequest request) {
+	public String carteDelete(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
 		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
 		cart.getMeals().remove(mealService.getById(id));
 		for (Iterator<Meal> iterator = cart.getMeals().iterator(); iterator.hasNext();) {
-		    Meal s =  iterator.next();
-		    if (s.getMeal_id() == id) {
-		        iterator.remove();
-		        break;
-		    }       
+			Meal s = iterator.next();
+			if (s.getMeal_id() == id) {
+				iterator.remove();
+				break;
+			}
 		}
 		cart.setPrice(Utils.setCartPrice(cart));
-		cart.setSize(cart.getSize()-1);
+		cart.setSize(cart.getSize() - 1);
 		model.addAttribute("cart", cart);
-		
+
 		return "shoppingCart";
 	}
-	
+
 	@RequestMapping(value = "/cart/refresh/{id}", method = RequestMethod.GET)
-	public String carteRefresh(@PathVariable("id") Long id,Model model, HttpServletRequest request) {
+	public String carteRefresh(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
 		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
 		cart.getMeals().remove(mealService.getById(id));
-		
+
 		model.addAttribute("cart", cart);
-		
+
 		return "shoppingCart";
 	}
 
@@ -118,7 +117,7 @@ public class HomeController {
 			Model model, HttpServletRequest request) {
 
 		boolean check = this.userService.checkLogin(userName, password);
-		
+
 		User user = null;
 		if (!check) {
 			return "redirect:/denied";
@@ -132,12 +131,13 @@ public class HomeController {
 		}
 
 	}
-	
+
 	@SuppressWarnings("null")
 	@RequestMapping(value = "/loggedMenu/{id}", method = RequestMethod.POST)
-	public String loginUserMenu(@PathVariable("id") Long id, @RequestParam("userName") String userName, @RequestParam("password") String password,
-			Model model, HttpServletRequest reques, RedirectAttributes attribute) {
-		
+	public String loginUserMenu(@PathVariable("id") Long id, @RequestParam("userName") String userName,
+			@RequestParam("password") String password, Model model, HttpServletRequest reques,
+			RedirectAttributes attribute) {
+
 		boolean check = this.userService.checkLogin(userName, password);
 		User user = null;
 		if (!check) {
@@ -145,12 +145,12 @@ public class HomeController {
 		} else {
 			user = userService.getByName(userName);
 			model.addAttribute("user", user);
-			Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,attribute);
+			Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,
+					attribute);
 			return "restaurant";
 		}
 
 	}
-
 
 	@RequestMapping(value = "/registered", method = RequestMethod.POST)
 	public String registred(@RequestParam("userName") String userName, @RequestParam("password") String password,
@@ -211,7 +211,7 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value ={"/logout"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/logout" }, method = RequestMethod.GET)
 	public String logout(Model model, HttpSession session, SessionStatus status) {
 		status.setComplete();
 		session.removeAttribute("user");
@@ -220,7 +220,7 @@ public class HomeController {
 		return "redirect:/";
 	}
 
-	@RequestMapping(value = {"/register"}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/register" }, method = RequestMethod.GET)
 	public String register(Model model) {
 		model.addAttribute("message", "");
 		return "register";
@@ -232,10 +232,10 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/googleRegister/{email}/{name}/{id}", method = RequestMethod.GET)
-	public String googleRegistert(@PathVariable("email") String email,@PathVariable("name") String name,@PathVariable("id") String id, Model model) {
-		
+	public String googleRegistert(@PathVariable("email") String email, @PathVariable("name") String name,
+			@PathVariable("id") String id, Model model) {
+
 		boolean check = true;
-		String message = null;
 		User user = new User();
 		List<User> userList = this.userService.list();
 
@@ -243,15 +243,14 @@ public class HomeController {
 
 			if ((u.getUserName().equals(email)) && (u.getEmail().equals(email))) {
 				check = false;
-				message = "User exist already click on Google";
-				user=u;
+				user = u;
 				break;
-			} 
+			}
 
 		}
 
 		if (check) {
-			
+
 			user.setUserName(email);
 			id = SecurePassword.getSecurePassword(id);
 			user.setUserPassword(id);
@@ -268,17 +267,64 @@ public class HomeController {
 			model.addAttribute("user", user);
 			return "main";
 		} else {
-			
+
 			model.addAttribute("user", user);
 			return "main";
 		}
-		
+
 	}
 
-	
+	@RequestMapping(value = { "restaurant/main/comment/googleRegister/{email}/{name}/{id}",
+			"restaurant/addCart/{restId}/googleRegister/{email}/{name}/{id}",
+			"restaurant/thumbsUpMeal/{restId}/googleRegister/{email}/{name}/{id}",
+			"restaurant/thumbsDownMeal/{restId}/googleRegister/{email}/{name}/{id}",
+			"restaurant/thumbsUpRest/googleRegister/{email}/{name}/{id}",
+			"restaurant/thumbsDownRest/googleRegister/{email}/{name}/{id}" }, method = RequestMethod.GET)
+	public String googleRegistertRestaurantPage(@PathVariable("email") String email, @PathVariable("name") String name,
+			@PathVariable("id") String id, Model model, RedirectAttributes att) {
+
+		boolean check = true;
+		User user = new User();
+		List<User> userList = this.userService.list();
+
+		for (User u : userList) {
+
+			if ((u.getUserName().equals(email)) && (u.getEmail().equals(email))) {
+				check = false;
+				user = u;
+				break;
+			}
+
+		}
+
+		if (check) {
+
+			user.setUserName(email);
+			id = SecurePassword.getSecurePassword(id);
+			user.setUserPassword(id);
+			user.setEmail(email);
+			user.setLastName(name);
+			user.setFirstName(name);
+			user.setEntryDate(new Date(new java.util.Date().getTime()));
+			userService.add(user);
+			ShoppingCart cart = new ShoppingCart();
+			cart.setUser(user);
+			cart.setPrice(0d);
+			cart.setSize(0);
+			cartService.add(cart);
+			model.addAttribute("user", user);
+			return "restaurant";
+		} else {
+
+			model.addAttribute("user", user);
+			return "restaurant";
+		}
+
+	}
+
 	@RequestMapping(value = "/loginGoogle", method = RequestMethod.GET)
 	public String loginGoogle() {
-		
+
 		return "socialLogged";
 	}
 

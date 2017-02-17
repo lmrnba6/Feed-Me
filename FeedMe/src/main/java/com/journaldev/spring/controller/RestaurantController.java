@@ -26,7 +26,7 @@ import com.journaldev.spring.service.RestaurantService;
 import com.journaldev.spring.util.Utils;
 
 @Controller
-@SessionAttributes({ "user", "cart" ,"lat", "lan" })
+@SessionAttributes({ "user", "cart" ,"lat", "lan","restaurant","menu","rating","starsOn" })
 public class RestaurantController {
 
 	@Autowired
@@ -74,14 +74,14 @@ public class RestaurantController {
 		rating.setRestaurant(restaurantService.getById(id));
 		rating.setReview(comment);
 		rating.setUser(user);
-		if(!Utils.checkDoubleComment(restRatingService, rating))
+		//if(!Utils.checkDoubleComment(restRatingService, rating))
 		restRatingService.add(rating);
 		Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,att);
 		return "restaurant";
 
 	}
 
-	@RequestMapping(value = "/restaurant/addCart/{restId}/{mealId}", method = {RequestMethod.GET,RequestMethod.POST})
+	@RequestMapping(value ="/restaurant/addCart/{restId}/{mealId}", method = {RequestMethod.GET,RequestMethod.POST})
 	public String restaurantAdd(@PathVariable("restId") Long restId,@PathVariable("mealId") Long mealId, Model model, HttpServletRequest request,
 			RedirectAttributes attribute) {
 
