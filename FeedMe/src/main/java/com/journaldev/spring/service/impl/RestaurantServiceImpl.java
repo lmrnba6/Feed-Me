@@ -47,5 +47,11 @@ public class RestaurantServiceImpl implements RestaurantService {
 
 		return this.restaurantDAO.getByName(name);
 	}
+	
+	@Override
+	public boolean checkLogin(String userName, String userPassword) {
+		
+		return this.restaurantDAO.checkLogin(userName, userPassword);
+	}
 
 }

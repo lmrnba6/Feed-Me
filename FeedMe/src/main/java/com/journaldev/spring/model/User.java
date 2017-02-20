@@ -61,4 +61,5 @@ public class User {
 	@Column(name = "STATE")
 	private String state;
 
+
 }

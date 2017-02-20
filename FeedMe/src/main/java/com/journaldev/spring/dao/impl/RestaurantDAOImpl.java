@@ -13,6 +13,8 @@ import org.springframework.stereotype.Repository;
 
 import com.journaldev.spring.dao.RestaurantDAO;
 import com.journaldev.spring.model.Restaurant;
+import com.journaldev.spring.model.User;
+import com.journaldev.spring.util.SecurePassword;
 
 @Repository
 public class RestaurantDAOImpl implements RestaurantDAO {
@@ -69,13 +71,32 @@ public class RestaurantDAOImpl implements RestaurantDAO {
 	public Restaurant getByName(String name) {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Restaurant> RestaurantList = new ArrayList<Restaurant>();
-		String SQL_QUERY = "from Restaurant u where u.name = '" + name + "'";
+		String SQL_QUERY = "from Restaurant u where u.userName = '" + name + "'";
 		Query<Restaurant> query = session.createQuery(SQL_QUERY);
 		RestaurantList = query.getResultList();
 		if (RestaurantList.size() > 0)
 			return RestaurantList.get(0);
 		else
 			return null;
+	}
+	
+	@Override
+	public boolean checkLogin(String userName, String userPassword) {
+
+		Session session = sessionFactory.getCurrentSession();
+		boolean restFound = false;
+		//userPassword=SecurePassword.getSecurePassword(userPassword);
+		// Query using Hibernate Query Language
+		String SQL_QUERY = " from Restaurant as o where o.userName= '" + userName + "' and o.password= '" + userPassword
+				+ "'";
+		Query<User> query = session.createQuery(SQL_QUERY);
+		List<User> list = query.getResultList();
+
+		if ((list != null) && (list.size() > 0)) {
+			restFound = true;
+		}
+
+		return restFound;
 	}
 
 }

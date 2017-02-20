@@ -16,6 +16,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.journaldev.spring.model.Meal;
 import com.journaldev.spring.model.RestRating;
+import com.journaldev.spring.model.Restaurant;
 import com.journaldev.spring.model.ShoppingCart;
 import com.journaldev.spring.model.User;
 import com.journaldev.spring.service.MealRatingService;
@@ -26,7 +27,7 @@ import com.journaldev.spring.service.RestaurantService;
 import com.journaldev.spring.util.Utils;
 
 @Controller
-@SessionAttributes({ "user", "cart" ,"lat", "lan","restaurant","menu","rating","starsOn" })
+@SessionAttributes({ "user", "cart" ,"lat", "lan","restaurant","menu","rating","starsOn","category" })
 public class RestaurantController {
 
 	@Autowired
@@ -48,7 +49,7 @@ public class RestaurantController {
 		return "restaurantList";
 	}
 
-	@RequestMapping(value = "/restaurant/list/{city}/main/{id}/{lat}/{lan}", method = RequestMethod.GET)
+	@RequestMapping(value = {"/restaurant/list/{city}/main/{id}/{lat}/{lan}","/googleRegister/{email}/{name}/{userId}/restaurant/list/{city}/main/{id}/{lat}/{lan}"}, method = RequestMethod.GET)
 	public String restaurantMain(@PathVariable("lat") String lat, @PathVariable("lan") String lan,@PathVariable("id") Long id, Model model, RedirectAttributes att) {
 		model.addAttribute("lan", lan);
 		model.addAttribute("lat", lat);
@@ -56,6 +57,17 @@ public class RestaurantController {
 		Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,att);
 		return "restaurant";
 	}
+	
+	@RequestMapping(value = "/restaurant/main/{id}", method = RequestMethod.GET)
+	public String restaurantMain2(@PathVariable("id") Long id, Model model, RedirectAttributes att) {
+		model.addAttribute("lan");
+		model.addAttribute("lat");
+		
+		Utils.restaurantInfoToModel(id, menuService, mealRatingService, model, restaurantService, restRatingService,att);
+		return "restaurant";
+	}
+	
+	
 
 	@RequestMapping(value = "/restaurant/main/comment/{id}", method = RequestMethod.GET)
 	public String restaurantMainComment(@PathVariable("id") Long id, Model model,

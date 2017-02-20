@@ -29,10 +29,8 @@ public class Restaurant {
 	private Long phoneNum2;
 	@Column(name = "HOMEDELIVERY")
 	private boolean homeDelivery;
-	@Column(name = "IS_DELIVERY_CHARGE")
-	private boolean isDeliveryCharge;
-	@Column(name = "DELIVERY_CHARGE")
-	private String deliveryCharge;
+	@Column(name = "CHARGE_FOR_DELIVERY")
+	private Double ChargeForDelivery;
 	@Column(name = "DELIVERY_TIME")
 	private String DeliveryTime;
 	@Column(name = "OPENING")
@@ -45,6 +43,8 @@ public class Restaurant {
 	private String Address;
 	@Column(name = "CITY")
 	private String city;
+	@Column(name = "DELIVERY_CHARGE")
+	private boolean deliveryCharge;
 	@Column(name = "ZIP")
 	private String zip;
 	@OneToOne
@@ -56,5 +56,10 @@ public class Restaurant {
 	private String ownerfirstName;
 	@Column(name = "REST_IMAGE_URL")
 	private String restImageUrl;
+	@Column(name = "PASSWORD")
+	private String password;
+	@Column(name = "USERNAME")
+	private String userName;
+	
 
 }

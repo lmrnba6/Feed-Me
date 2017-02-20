@@ -21,7 +21,7 @@ import com.journaldev.spring.service.UserService;
 import com.journaldev.spring.util.SecurePassword;
 
 @Controller
-@SessionAttributes({ "user", "cart" })
+@SessionAttributes({ "user", "cart","restaurant", "menu","rating","starsOn" })
 public class AccountController {
 
 	@Autowired

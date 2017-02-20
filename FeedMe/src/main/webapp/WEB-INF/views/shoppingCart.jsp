@@ -42,6 +42,7 @@
 		<h3>0 element in your cart</h3>
 	</c:when>
 	<c:otherwise>
+	<form>
 	<table id="cart" class="table table-hover table-condensed">
     				<thead>
 						<tr>
@@ -53,6 +54,7 @@
 						</tr>
 					</thead>
 					<c:forEach items="${cart.meals}" var="meal">	
+					
 					<tbody>
 						<tr>
 							<td data-th="Product">
@@ -64,15 +66,18 @@
 									</div>
 								</div>
 							</td>
+							
 							<td data-th="Price">${meal.price}</td>
 							<td data-th="Quantity">
-								<input type="number" class="form-control text-center" value="1">
+								<input type="number" name="quantity" class="form-control text-center" disabled="disabled" value="1"/>
 							</td>
 							<td data-th="Subtotal" class="text-center">${meal.price}</td>
 							<td class="actions" data-th="">
-								<a href="<c:url value='/cart/refresh/${meal.meal_id}'/>" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></a>
-								<a href="<c:url value='/cart/delete/${meal.meal_id}'/>" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>								
+								<%-- <a href="<c:url value='/cart/refresh/${meal.meal_id}'/>" class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></a> --%>
+								<a href="<c:url value='/cart/delete/${meal.meal_id}'/>" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>	
+															
 							</td>
+							
 						</tr>
 					</tbody>
 					
@@ -82,13 +87,14 @@
 							<td class="text-center"><strong>Total ${cart.price}</strong></td>
 						</tr>
 						<tr>
-							<td><a href="<c:url value='/'/>" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+							<td><a href="<c:url value='/restaurant/main/${restaurant.restId}'/>" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center"><strong>Total $ ${cart.price}</strong></td>
 							<td><a href="<c:url value='/'/>" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 				</table>
+				</form>
 </c:otherwise>
 	</c:choose>	
 </div>

@@ -27,12 +27,14 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.journaldev.spring.model.Meal;
+import com.journaldev.spring.model.RestCategory;
 import com.journaldev.spring.model.Restaurant;
 import com.journaldev.spring.model.ShoppingCart;
 import com.journaldev.spring.model.User;
 import com.journaldev.spring.service.MealRatingService;
 import com.journaldev.spring.service.MealService;
 import com.journaldev.spring.service.MenuService;
+import com.journaldev.spring.service.RestCategoryService;
 import com.journaldev.spring.service.RestRatingService;
 import com.journaldev.spring.service.RestaurantService;
 import com.journaldev.spring.service.ShoppingCartService;
@@ -41,7 +43,7 @@ import com.journaldev.spring.util.SecurePassword;
 import com.journaldev.spring.util.Utils;
 
 @Controller
-@SessionAttributes({ "user", "cart", "restaurant", "menu" })
+@SessionAttributes({ "user", "cart", "restaurant", "menu", "rating", "starsOn","category" })
 public class HomeController {
 
 	@Autowired
@@ -58,6 +60,9 @@ public class HomeController {
 	private MenuService menuService;
 	@Autowired
 	private MealRatingService mealRatingService;
+	@Autowired
+	private RestCategoryService categoryService;
+	
 
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String main(Model model, HttpServletRequest request) {
@@ -102,9 +107,9 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/cart/refresh/{id}", method = RequestMethod.GET)
-	public String carteRefresh(@PathVariable("id") Long id, Model model, HttpServletRequest request) {
+	public String carteRefresh(@RequestParam("quantity") int quantity, @PathVariable("id") Long id, Model model,
+			HttpServletRequest request) {
 		ShoppingCart cart = (ShoppingCart) request.getSession().getAttribute("cart");
-		cart.getMeals().remove(mealService.getById(id));
 
 		model.addAttribute("cart", cart);
 
@@ -116,11 +121,21 @@ public class HomeController {
 	public String loginUser(@RequestParam("userName") String userName, @RequestParam("password") String password,
 			Model model, HttpServletRequest request) {
 
+		List<RestCategory>categoryList = categoryService.list();
 		boolean check = this.userService.checkLogin(userName, password);
+		boolean checkRestaurant = this.restaurantService.checkLogin(userName, password);
 
 		User user = null;
+		Restaurant restaurant = null;
 		if (!check) {
-			return "redirect:/denied";
+			if(!checkRestaurant){
+				return "redirect:/denied";
+			}else{
+				restaurant = restaurantService.getByName(userName);
+				model.addAttribute("restaurant", restaurant);
+				model.addAttribute("category", categoryList);
+				return "restaurantOwner";
+			}
 		} else {
 			user = userService.getByName(userName);
 			model.addAttribute("user", user);
@@ -279,7 +294,7 @@ public class HomeController {
 			"restaurant/thumbsUpMeal/{restId}/googleRegister/{email}/{name}/{id}",
 			"restaurant/thumbsDownMeal/{restId}/googleRegister/{email}/{name}/{id}",
 			"restaurant/thumbsUpRest/googleRegister/{email}/{name}/{id}",
-			"restaurant/thumbsDownRest/googleRegister/{email}/{name}/{id}" }, method = RequestMethod.GET)
+			"restaurant/thumbsDownRest/googleRegister/{email}/{name}/{id}"}, method = RequestMethod.GET)
 	public String googleRegistertRestaurantPage(@PathVariable("email") String email, @PathVariable("name") String name,
 			@PathVariable("id") String id, Model model, RedirectAttributes att) {
 

@@ -50,12 +50,12 @@
 							${restaurant.closing}</p>
 						<c:if test="${restaurant.deliveryCharge==true}">
 							<p>
-								Home delivery <span class="glyphicon glyphicon-ok"></span>
+								Charge for delivery <span class="glyphicon glyphicon-ok"></span>
 							</p>
 						</c:if>
 						<c:if test="${restaurant.deliveryCharge==false}">
 							<p>
-								Home delivery <span class="glyphicon glyphicon-remove"></span>
+								Charge for delivery <span class="glyphicon glyphicon-remove"></span>
 							</p>
 						</c:if>
 
