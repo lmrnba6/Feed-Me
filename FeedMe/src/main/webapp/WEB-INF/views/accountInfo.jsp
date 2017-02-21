@@ -29,7 +29,7 @@
 
 						<h1 class="well">Account</h1>
 
-						<div class="col-lg-12">
+						<div class="col-lg-12 accountInfo">
 							<div class="row">
 								<c:if test="${!empty messageFailed}">
 									<div class="alert alert-danger">
@@ -80,7 +80,7 @@
 											</div>
 											<div class="col-sm-1 form-group">
 												<button type="submit" class="btn btn-success"
-													disabled="disabled">save</button>
+													disabled="disabled">Save</button>
 											</div>
 										</div>
 									</form>

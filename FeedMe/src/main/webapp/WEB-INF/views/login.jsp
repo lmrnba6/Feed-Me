@@ -49,6 +49,11 @@
 					<strong></strong> ${message}
 				</div>
 			</c:if>
+			<c:if test="${!empty messageFail}">
+				<div class="alert alert-danger">
+					<strong></strong> ${messageFail}
+				</div>
+			</c:if>
 			<h2 class="form-signin-heading">Sign in</h2>
 			<div class="social">
 				<button class="loginBtn loginBtn--facebook" onclick="Login()">Facebook</button>
@@ -74,7 +79,21 @@
 
 		</form>
 		<a href="#" id="signOut" onclick="signOut();"></a>
+		<script type="text/javascript">
+		window.onbeforeunload = function(e){
+			  gapi.auth2.getAuthInstance().signOut();
+			};
+			function signOut() {
+				var auth2 = gapi.auth2.getAuthInstance();
+				auth2.signOut().then(function() {
+					console.log('User signed out.');
+				});
+
+			}
+		</script>
 		<script>
+			
+
 			function onSignIn(googleUser) {
 				var profile = googleUser.getBasicProfile();
 				console.log('ID: ' + profile.getId() + ' ' + 'Name: '
@@ -86,6 +105,7 @@
 					location.href = "googleRegister/" + profile.getEmail()
 							+ "/" + profile.getName() + "/" + profile.getId()
 							+ "/";
+					
 				} else {
 
 					$('#signOut').trigger('click');
@@ -93,15 +113,7 @@
 				}
 			}
 		</script>
-		<script type="text/javascript">
-			function signOut() {
-				var auth2 = gapi.auth2.getAuthInstance();
-				auth2.signOut().then(function() {
-					console.log('User signed out.');
-				});
-
-			}
-		</script>
+		
 	</div>
 
 

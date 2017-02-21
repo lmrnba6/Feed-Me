@@ -94,6 +94,7 @@ public final class Utils {
 		model.addAttribute("starsOn", stars);
 		Menu menu = menuService.getByName(String.valueOf(restaurant.getRestId()));
 		model.addAttribute("menu", menu.getMeal());
+		model.addAttribute("menuRestaurant", menu);
 		//model.addAttribute("mealRating", Utils.mealRating(mealRatingService.list()));
 	}
 

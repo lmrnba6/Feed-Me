@@ -58,10 +58,13 @@ public class MealDAOImpl implements MealDAO {
 	public void remove(Long id) {
 		Session session = this.sessionFactory.getCurrentSession();
 		Meal p = (Meal) session.load(Meal.class, id);
-		if (null != p) {
+		Query query = session.createQuery("delete from meal u left join fetch menu where u.meal_id =:id").setParameter("id", id); 
+		int result = query.executeUpdate();
+		/*if (null != p) {
 			session.delete(p);
-		}
-		logger.info("Meal deleted successfully, Meal details=" + p);
+		}			     	 
+	    
+		logger.info("Meal deleted successfully, Meal details=" + p);*/
 	}
 
 	@SuppressWarnings("unchecked")

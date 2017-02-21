@@ -62,7 +62,7 @@
 									<div class="col-sm-4 hidden-xs"><img src="${meal.mealImageUrl}" alt="..." class="img-responsive"/></div>
 									<div class="col-sm-8">
 										<h4 class="nomargin">${meal.mealName}</h4>
-										<p>${meal.discription}</p>
+										<p>${meal.description}</p>
 									</div>
 								</div>
 							</td>
@@ -90,7 +90,7 @@
 							<td><a href="<c:url value='/restaurant/main/${restaurant.restId}'/>" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
 							<td colspan="2" class="hidden-xs"></td>
 							<td class="hidden-xs text-center"><strong>Total $ ${cart.price}</strong></td>
-							<td><a href="<c:url value='/'/>" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+							<td><a href="<c:url value='/saveOrder'/>" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
 						</tr>
 					</tfoot>
 				</table>

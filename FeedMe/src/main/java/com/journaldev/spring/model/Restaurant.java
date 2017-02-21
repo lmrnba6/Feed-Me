@@ -37,8 +37,8 @@ public class Restaurant {
 	private String opening;
 	@Column(name = "CLOSING")
 	private String closing;
-	@Column(name = "DISCRIPTION")
-	private String discription;
+	@Column(name = "DeSCRIPTION")
+	private String description;
 	@Column(name = "ADDRESS")
 	private String Address;
 	@Column(name = "CITY")

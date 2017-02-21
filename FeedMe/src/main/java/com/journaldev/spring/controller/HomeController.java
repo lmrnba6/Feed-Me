@@ -28,6 +28,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.journaldev.spring.model.Meal;
 import com.journaldev.spring.model.RestCategory;
+import com.journaldev.spring.model.RestRating;
 import com.journaldev.spring.model.Restaurant;
 import com.journaldev.spring.model.ShoppingCart;
 import com.journaldev.spring.model.User;
@@ -43,7 +44,7 @@ import com.journaldev.spring.util.SecurePassword;
 import com.journaldev.spring.util.Utils;
 
 @Controller
-@SessionAttributes({ "user", "cart", "restaurant", "menu", "rating", "starsOn","category" })
+@SessionAttributes({ "user", "cart", "restaurant", "menu", "rating", "starsOn","category","menuRestaurant" })
 public class HomeController {
 
 	@Autowired
@@ -119,7 +120,7 @@ public class HomeController {
 	@SuppressWarnings("null")
 	@RequestMapping(value = "/logged", method = RequestMethod.POST)
 	public String loginUser(@RequestParam("userName") String userName, @RequestParam("password") String password,
-			Model model, HttpServletRequest request) {
+			Model model, HttpServletRequest request, RedirectAttributes att) {
 
 		List<RestCategory>categoryList = categoryService.list();
 		boolean check = this.userService.checkLogin(userName, password);
@@ -132,8 +133,10 @@ public class HomeController {
 				return "redirect:/denied";
 			}else{
 				restaurant = restaurantService.getByName(userName);
-				model.addAttribute("restaurant", restaurant);
+				
 				model.addAttribute("category", categoryList);
+				model.addAttribute("ownerHeader","ownerHeader");
+				Utils.restaurantInfoToModel(restaurant.getRestId(), menuService, mealRatingService, model, restaurantService, restRatingService, att);
 				return "restaurantOwner";
 			}
 		} else {
@@ -242,8 +245,9 @@ public class HomeController {
 	}
 
 	@RequestMapping(value = "/denied", method = RequestMethod.GET)
-	public String denied() {
-		return "denied";
+	public String denied(Model model) {
+		model.addAttribute("messageFail", "Invalid Username or Password!!");
+		return "login";
 	}
 
 	@RequestMapping(value = "/googleRegister/{email}/{name}/{id}", method = RequestMethod.GET)
@@ -337,10 +341,10 @@ public class HomeController {
 
 	}
 
-	@RequestMapping(value = "/loginGoogle", method = RequestMethod.GET)
+	@RequestMapping(value = "/help", method = RequestMethod.GET)
 	public String loginGoogle() {
 
-		return "socialLogged";
+		return "test";
 	}
 
 }

@@ -30,11 +30,18 @@ $("#info").click(function(){
 
 
 $(".picture").hide();
+$("#mealForm").hide();
 
 
 $("#changePicture").click(function(){
 	
 	$(".picture").show();
+});
+
+$("#addMealPicture").click(function(){
+	
+	$("#mealForm").show();
+	$("#addMealPicture").hide();
 });
 
 $('#editName').click(function() {

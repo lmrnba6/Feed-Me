@@ -69,7 +69,7 @@
 														${restaurant.closing}</p>
 													<p>Phone: ${restaurant.phoneNum1}</p>
 													<p>Address: ${restaurant.address} ${restaurant.city}</p>
-													<p>${restaurant.discription}</p>
+													<p>${restaurant.description}</p>
 												</div>
 												<div class="m-t text-righ">
 

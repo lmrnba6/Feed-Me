@@ -27,7 +27,7 @@ import com.journaldev.spring.service.RestaurantService;
 import com.journaldev.spring.util.Utils;
 
 @Controller
-@SessionAttributes({ "user", "cart" ,"lat", "lan","restaurant","menu","rating","starsOn","category" })
+@SessionAttributes({ "user", "cart" ,"lat", "lan","restaurant","menu","rating","starsOn","category","menuRestaurant" })
 public class RestaurantController {
 
 	@Autowired

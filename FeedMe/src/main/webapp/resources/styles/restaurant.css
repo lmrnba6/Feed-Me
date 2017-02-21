@@ -141,6 +141,10 @@ p {
 	outline: none;
 }
 
+#infoDiv .btn{
+	margin-top: 25px;
+}
+
 .checkbox-nice label {
 	padding-top: 3px;
 }

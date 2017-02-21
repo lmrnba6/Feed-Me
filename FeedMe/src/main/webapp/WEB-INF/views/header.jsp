@@ -15,6 +15,7 @@
 		cart.setSize(0);
 	}
 	%>
+	
 	<nav class="navbar navbar-inverse navbar-fixed-top">
 		<div class="container-fluid">
 			<div class="navbar-header">
@@ -31,6 +32,7 @@
 					<!-- <li><a href="test">Feed-Me</a></li> -->
 				</ul>
 				<ul class=" nav navbar-nav navbar-right navbar-collapse">
+				<c:if test="${empty ownerHeader}">
 					<c:choose>
 						<c:when test="${!empty user}">
 							<li><a href="<c:url value='/logout'/>"><span
@@ -41,7 +43,7 @@
 							<li><a href="<c:url value='/account/cart'/>"><span
 									class="glyphicon glyphicon-shopping-cart"></span>
 									<%=cart.getSize() %> items</a></li>
-							<li><a href=""><span class="glyphicon glyphicon-book"></span>
+							<li><a href="<c:url value='/help'/>"><span class="glyphicon glyphicon-book"></span>
 									Help </a></li>
 						</c:when>
 						<c:otherwise>
@@ -52,10 +54,20 @@
 							<li><a href="<c:url value='/account/cart'/>"><span
 									class="glyphicon glyphicon-shopping-cart"></span>
 									<%=cart.getSize()%> items</a></li>
-							<li><a href="register"><span
+							<li><a href="<c:url value='/help'/>"><span
 									class="glyphicon glyphicon-book"></span> Help</a></li>
 						</c:otherwise>
 					</c:choose>
+					</c:if>
+					<c:if test="${!empty ownerHeader}">
+					<li><a href="<c:url value='/logout'/>"><span
+									class="glyphicon glyphicon-log-in"></span> Logout </a></li>
+							<li><a href="#"><span
+									class="glyphicon glyphicon-user"></span> Hi ${restaurant.ownerfirstName}</a></li>
+
+							<li><a href="<c:url value='/help'/>"><span class="glyphicon glyphicon-book"></span>
+									Help </a></li>
+					</c:if>
 				</ul>
 			</div>
 		</div>

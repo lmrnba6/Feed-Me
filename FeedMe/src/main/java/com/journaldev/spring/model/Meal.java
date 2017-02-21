@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import lombok.Getter;
@@ -30,7 +31,7 @@ public class Meal {
 	@Column(name = "MEAL_NAME")
 	private String mealName;
 	@Column(name = "DESCRIPTION")
-	private String discription;
+	private String description;
 	@Column(name = "PRICE")
 	private Double price;
 	@Column(name = "TYPE")
@@ -44,6 +45,7 @@ public class Meal {
 	private Menu menu;
 	@ManyToMany(fetch = FetchType.EAGER)
 	private Set<ShoppingCart> cart = new HashSet<>();
+	
 	
 
 }

@@ -1,5 +1,6 @@
 package com.journaldev.spring.model;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -35,4 +36,7 @@ public class Order {
     private String comment;
     @Column(name="STATUS")
     private String status;
+    @Column(name="DATE")
+    private Date date;
+    
 }

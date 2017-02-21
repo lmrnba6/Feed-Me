@@ -71,7 +71,7 @@
 								Home delivery <span class="glyphicon glyphicon-remove"></span>
 							</p>
 						</c:if>
-						<p>Description: ${restaurant.discription}</p>
+						<p>Description: ${restaurant.description}</p>
 						<div class="pull-left">
 							<c:forEach begin="1" end="${starsOn}" varStatus="loop">
 								<span class="glyphicon glyphicon-star "></span>
@@ -133,7 +133,7 @@
 
 								<div class="col-lg-10 d-table">
 
-									<p>${m.discription}</p>
+									<p>${m.description}</p>
 								</div>
 							</div>
 							<hr>
